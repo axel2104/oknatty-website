@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Siamo | OKNATTY - Il Gusto che Ti Fa Bene</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F5E6C8;
+            --beige: #E8D5B5;
+            --brown: #5C3D2E;
+            --dark-brown: #3D2618;
+            --chocolate: #7B4B2A;
+            --accent: #D4A574;
+            --white: #FFFDF7;
+            --green: #6B8E4E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--white);
+            color: var(--dark-brown);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 253, 247, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--cream);
+        }
+
+        .navbar .logo {
+            height: 50px;
+        }
+
+        .navbar .logo img {
+            height: 100%;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--brown);
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .nav-links a:hover {
+            color: var(--chocolate);
+        }
+
+        .nav-cta {
+            background: var(--brown);
+            color: var(--white) !important;
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: all 0.3s !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--chocolate) !important;
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--brown);
+        }
+
+        /* Hero */
+        .about-hero {
+            min-height: 70vh;
+            padding: 140px 5% 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--beige) 100%);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(212,165,116,0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .about-hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--dark-brown);
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .about-hero .subtitle {
+            font-size: 1.3rem;
+            color: var(--brown);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .about-hero p {
+            font-size: 1.1rem;
+            color: var(--dark-brown);
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-alt {
+            background: linear-gradient(135deg, var(--cream) 0%, var(--beige) 100%);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--dark-brown);
+            margin-bottom: 15px;
+        }
+
+        .section-header .divider {
+            width: 80px;
+            height: 4px;
+            background: var(--brown);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        .content-block {
+            background: var(--white);
+            padding: 50px;
+            border-radius: 30px;
+            border: 4px solid var(--brown);
+            margin-bottom: 40px;
+        }
+
+        .content-block h3 {
+            font-size: 1.8rem;
+            color: var(--brown);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .content-block p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--dark-brown);
+            margin-bottom: 15px;
+        }
+
+        .content-block strong {
+            color: var(--brown);
+            font-weight: 700;
+        }
+
+        /* Ecosystem */
+        .ecosystem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .eco-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 25px;
+            border: 4px solid var(--brown);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .eco-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .eco-card .icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .eco-card h3 {
+            font-size: 1.5rem;
+            color: var(--brown);
+            margin-bottom: 15px;
+        }
+
+        .eco-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--dark-brown);
+        }
+
+        /* Values */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .value-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 25px;
+            border: 4px solid var(--brown);
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .value-card .icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .value-card h4 {
+            font-size: 1.3rem;
+            color: var(--brown);
+            margin-bottom: 10px;
+        }
+
+        .value-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--dark-brown);
+        }
+
+        /* Vision CTA */
+        .vision-cta {
+            padding: 100px 5%;
+            background: var(--dark-brown);
+            color: var(--cream);
+            text-align: center;
+        }
+
+        .vision-cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 30px;
+            color: var(--white);
+        }
+
+        .vision-cta p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .vision-cta .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--cream);
+            color: var(--dark-brown);
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            border: 3px solid var(--cream);
+        }
+
+        .vision-cta .cta-btn:hover {
+            background: transparent;
+            color: var(--cream);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-brown);
+            color: var(--cream);
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-brand img {
+            height: 60px;
+            margin-bottom: 15px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-brand p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        .footer-links h4 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--cream);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(245,230,200,0.2);
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .ecosystem-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .content-block {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .value-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="OKNATTY Logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#prodotti">Prodotti</a></li>
+            <li><a href="chi-siamo.html">Chi Siamo</a></li>
+            <li><a href="#" class="nav-cta">Ordina Ora</a></li>
+        </ul>
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
+
+    <!-- Hero -->
+    <section class="about-hero">
+        <div class="about-hero-content">
+            <h1>Chi Siamo</h1>
+            <p class="subtitle">Il Terzo Pilastro del Tuo Benessere</p>
+            <p>OKNATTY nasce per completare un sogno: costruire un <strong>ecosistema a 360°</strong> in cui il benessere, lo sport e l'alimentazione si incontrano senza compromessi.</p>
+        </div>
+    </section>
+
+    <!-- Chi Siamo -->
+    <section class="section">
+        <div class="section-header">
+            <h2>La Nostra Storia</h2>
+            <div class="divider"></div>
+        </div>
+        
+        <div class="content-block">
+            <p><strong>OKNATTY</strong> nasce per completare un sogno che avevamo da tempo: costruire un <strong>ecosistema a 360°</strong> in cui il benessere, lo sport e l'alimentazione si incontrano senza compromessi.</p>
+            
+            <p>Affiancando <strong>ELEMENT FOR</strong>, la nostra realta dedicata agli integratori sportivi, ed <strong>ETERNA</strong>, specializzata in nutraceutica di alta qualita, OKNATTY rappresenta il <strong>terzo pilastro</strong> di un mondo pensato per chi non vuole scegliere tra prestazione e gusto.</p>
+            
+            <p>Dal food funzionale alla nutraceutica, dagli integratori allo sport: nel nostro universo trovi tutto cio che serve per vivere una vita <strong>healthy</strong>, connessa alla tua passione e al tuo sport preferito.</p>
+            
+            <p>Siamo partiti con cio che meglio racconta la nostra filosofia: <strong>creme proteiche, burro d'arachidi e crema di riso</strong>, selezionati per offrirti il massimo del gusto senza il senso di colpa. Ma questa e solo l'inizio. Il nostro obiettivo e espanderci continuamente con un <strong>food funzionale sempre piu tecnico</strong>, capace di dare sapore alla tua dieta e supportare i tuoi obiettivi, giorno dopo giorno.</p>
+        </div>
+    </section>
+
+    <!-- Ecosystem -->
+    <section class="section section-alt">
+        <div class="section-header">
+            <h2>Il Nostro Ecosistema</h2>
+            <div class="divider"></div>
+        </div>
+        
+        <div class="ecosystem-grid">
+            <div class="eco-card">
+                <div class="icon">💪</div>
+                <h3>ELEMENT FOR</h3>
+                <p>Integratori sportivi di alta qualita per chi vuole spingersi oltre. La scienza al servizio della tua performance.</p>
+            </div>
+            <div class="eco-card">
+                <div class="icon">🌿</div>
+                <h3>ETERNA</h3>
+                <p>Nutraceutica di alta qualita per il tuo benessere quotidiano. La natura incontra la ricerca scientifica.</p>
+            </div>
+            <div class="eco-card">
+                <div class="icon">🥄</div>
+                <h3>OKNATTY</h3>
+                <p>Food funzionale che unisce gusto e nutrizione. Il piacere di mangiare sano, senza compromessi.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="section">
+        <div class="section-header">
+            <h2>La Nostra Mission</h2>
+            <div class="divider"></div>
+        </div>
+        
+        <div class="content-block">
+            <h3>🎯 Accontentare il 99%</h3>
+            <p>Crediamo che mangiare sano non debba significare rinunciare al piacere. Per questo la nostra missione e semplice e ambiziosa: <strong>accontentare il 99% degli utenti</strong> che entrano nel nostro mondo, offrendo prodotti che uniscono <strong>gusto eccezionale, qualita assoluta e trasparenza totale</strong>.</p>
+            
+            <p>Ogni prodotto OKNATTY e <strong>completamente Made in Italy</strong>, realizzato con materie prime selezionate e confezionato in <strong>vetro</strong> per preservarne freschezza e sostenibilita. Garantiamo l'<strong>assenza di additivi, zuccheri aggiunti e olio di palma</strong>, mantenendo una presenza di grassi e carboidrati bassissima — spesso nulla — senza mai tradire il sapore.</p>
+            
+            <p>Per noi, il food funzionale e la chiave di un equilibrio reale: nutrire il corpo, soddisfare il palato e liberare la mente da ogni senso di colpa.</p>
+        </div>
+    </section>
+
+    <!-- Values -->
+    <section class="section section-alt">
+        <div class="section-header">
+            <h2>I Nostri Valori</h2>
+            <div class="divider"></div>
+        </div>
+        
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="icon">🇮🇹</div>
+                <div>
+                    <h4>Made in Italy</h4>
+                    <p>Tutti i nostri prodotti sono realizzati in Italia con materie prime selezionate e processi artigianali.</p>
+                </div>
+            </div>
+            <div class="value-card">
+                <div class="icon">🌱</div>
+                <div>
+                    <h4>100% Naturale</h4>
+                    <p>Nessun additivo, nessun conservante artificiale. Solo ingredienti veri che puoi pronunciare.</p>
+                </div>
+            </div>
+            <div class="value-card">
+                <div class="icon">♻️</div>
+                <div>
+                    <h4>Sostenibilita</h4>
+                    <p>Confezioni in vetro riciclabile, niente plastica. Per un pianeta che possiamo lasciare in eredita.</p>
+                </div>
+            </div>
+            <div class="value-card">
+                <div class="icon">🔍</div>
+                <div>
+                    <h4>Trasparenza</h4>
+                    <p>Ti diciamo esattamente cosa mangi. Etichette chiare, ingredienti tracciabili, nessun segreto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision -->
+    <section class="section">
+        <div class="section-header">
+            <h2>La Nostra Vision</h2>
+            <div class="divider"></div>
+        </div>
+        
+        <div class="content-block">
+            <p>Immaginiamo un futuro in cui <strong>non esistono piu barriere tra nutrizione, benessere e felicita</strong>. Un mondo in cui chi sceglie di prendersi cura di se non deve piu fare sacrifici, ma puo contare su un <strong>ecosistema completo e coerente</strong> che lo accompagna in ogni momento della giornata.</p>
+            
+            <p>La nostra visione e quella di espandere OKNATTY fino a diventare il <strong>punto di riferimento italiano nel food funzionale</strong>, un brand che gli atleti, gli appassionati di fitness e chiunque voglia una vita piu sana riconoscono come <strong>garanzia di qualita, gusto e integrita</strong>.</p>
+            
+            <p>Vogliamo dimostrare che l'eccellenza italiana, la cura del dettaglio e il rispetto per il consumatore possono coesistere con un'esperienza gustosa e senza compromessi.</p>
+        </div>
+    </section>
+
+    <!-- Vision CTA -->
+    <section class="vision-cta">
+        <h2>OKNATTY non e solo un brand.</h2>
+        <p>E il modo in cui il benessere diventa sostenibile, gustoso e finalmente completo.</p>
+        <a href="index.html#prodotti" class="cta-btn">Scopri i Nostri Prodotti 🥄</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="logo.png" alt="OKNATTY">
+                <p>OKNATTY - Creme spalmabili proteiche che uniscono gusto e benessere. Il tuo alleato per una colazione, uno snack o un post-workout perfetto.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Prodotti</h4>
+                <ul>
+                    <li><a href="prodotti/cioccolato-fondente.html">Cioccolato Fondente</a></li>
+                    <li><a href="prodotti/cioccolato-cocco.html">Cioccolato e Cocco</a></li>
+                    <li><a href="prodotti/caramello-salato.html">Caramello Salato</a></li>
+                    <li><a href="prodotti/nocciolata-bianca.html">Crema Nocciola Bianca</a></li>
+                    <li><a href="prodotti/cacao-nocciola.html">Cacao e Nocciola</a></li>
+                    <li><a href="prodotti/crema-cocco-bar.html">Burro d'Arachidi</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>OKNATTY</h4>
+                <ul>
+                    <li><a href="chi-siamo.html">Chi Siamo</a></li>
+                    <li><a href="#">Ingredienti</a></li>
+                    <li><a href="#">Valori Nutrizionali</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Contatti</h4>
+                <ul>
+                    <li><a href="mailto:info@oknatty.com">info@oknatty.com</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">TikTok</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 OKNATTY. Tutti i diritti riservati. | Made with ❤️ in Italy</p>
+        </div>
+    </footer>
+</body>
+</html>
