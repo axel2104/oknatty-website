@@ -1,3 +1,9 @@
 .DS_Store
 *.log
 node_modules/
+# Escludi PNG originali grandi (mantieni solo quelli compressi)
+*.png
+!*_compressed.png
+!MOCKUP/*.png
+# Escludi cartella etichette
+OKNATTY_etichette/
