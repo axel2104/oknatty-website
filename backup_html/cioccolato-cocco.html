@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Burro d'Arachidi | OKNATTY - Creme Spalmabili Proteiche</title>
+    <title>Cioccolato e Cocco | OKNATTY - Creme Spalmabili Proteiche</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -11,13 +11,13 @@
         :root {
             --cream: #F5E6C8;
             --beige: #E8D5B5;
-            --brown: #5C3D2E;
+            --brown: #8B6914;
             --dark-brown: #3D2618;
-            --chocolate: #B8956A;
-            --accent: #D4A574;
+            --chocolate: #8B6914;
+            --accent: #8B6914;
             --white: #FFFDF7;
             --green: #6B8E4E;
-            --product-bg: #F5E6C8;
+            --product-bg: #FFF5E6;
         }
 
         * {
@@ -30,14 +30,6 @@
             font-family: 'Nunito', sans-serif;
             color: var(--dark-brown);
             overflow-x: hidden;
-        }
-
-        /* Texture carta */
-        body {
-            background-image: url('../white-paper-texture.jpg');
-            background-repeat: repeat;
-            background-size: 500px;
-            background-attachment: fixed;
         }
 
         h1, h2, h3, h4 {
@@ -54,7 +46,7 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(255, 253, 247, 0.85) !important;
+            background: rgba(255, 253, 247, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 2px solid var(--cream);
         }
@@ -115,6 +107,7 @@
             padding: 120px 5% 60px;
             display: flex;
             align-items: center;
+            
             position: relative;
             overflow: hidden;
         }
@@ -138,6 +131,35 @@
             gap: 60px;
             align-items: center;
             width: 100%;
+        }
+
+        .product-images {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .product-main-image {
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 40px rgba(61,38,24,0.2));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .product-label-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            border: 4px solid var(--brown);
+            box-shadow: 0 10px 30px rgba(61,38,24,0.15);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
         }
 
         .product-info {
@@ -164,16 +186,8 @@
             line-height: 1.1;
         }
 
-        .product-subtitle {
-            font-size: 1.3rem;
-            color: var(--chocolate);
-            font-weight: 600;
-            margin-bottom: 20px;
-            font-family: 'Fredoka', sans-serif;
-        }
-
         .product-description {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--brown);
             margin-bottom: 30px;
             line-height: 1.7;
@@ -187,7 +201,7 @@
         }
 
         .stat-box {
-            background: rgba(255, 253, 247, 0.8) !important;
+            background: var(--white);
             padding: 20px;
             border-radius: 20px;
             border: 3px solid var(--brown);
@@ -213,79 +227,6 @@
             font-weight: 600;
         }
 
-        /* Varianti Selector */
-        .variant-selector {
-            margin-bottom: 30px;
-        }
-
-        .variant-label {
-            font-family: 'Fredoka', sans-serif;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            display: block;
-            color: var(--dark-brown);
-        }
-
-        .variant-options {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .variant-btn {
-            padding: 12px 30px;
-            border: 3px solid var(--brown);
-            border-radius: 50px;
-            background: transparent;
-            color: var(--brown);
-            font-family: 'Fredoka', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .variant-btn.active {
-            background: var(--brown);
-            color: var(--white);
-        }
-
-        .variant-btn:hover {
-            background: var(--brown);
-            color: var(--white);
-            transform: translateY(-2px);
-        }
-
-        .price-tag {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--brown);
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        .price-note {
-            display: inline-block;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--dark-brown);
-            background: var(--white);
-            border: 3px solid var(--brown);
-            border-radius: 16px;
-            padding: 10px 24px;
-            margin-bottom: 20px;
-            box-shadow: 4px 4px 0 var(--brown);
-        }
-
-        .cta-group {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 5px;
-        }
-
         .product-cta {
             display: inline-flex;
             align-items: center;
@@ -308,39 +249,11 @@
             transform: translateY(-3px);
         }
 
-        /* Hero Image */
-        .hero-product-image {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hero-product-image img {
-            width: 100%;
-            max-width: 500px;
-            border-radius: 2rem;
-            border: 4px solid var(--brown);
-            box-shadow: 0 20px 60px rgba(92, 61, 46, 0.25);
-            filter: drop-shadow(0 10px 30px rgba(92, 61, 46, 0.2));
-            transition: opacity 0.5s;
-        }
-
-        .hero-product-image img.fade {
-            opacity: 0;
-        }
-
         /* Info Sections */
         .info-section {
             padding: 80px 5%;
             max-width: 1400px;
             margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--dark-brown);
-            margin-bottom: 50px;
         }
 
         .info-grid {
@@ -350,7 +263,7 @@
         }
 
         .info-card {
-            background: rgba(245, 230, 200, 0.7) !important;
+            background: var(--product-bg);
             padding: 40px;
             border-radius: 30px;
             border: 4px solid var(--brown);
@@ -365,48 +278,16 @@
             gap: 10px;
         }
 
-        .info-card p, .info-card li {
-            font-size: 1.05rem;
+        .info-card p {
+            font-size: 1.1rem;
             line-height: 1.7;
             color: var(--dark-brown);
-        }
-
-        .info-card ul {
-            margin-top: 15px;
-            padding-left: 20px;
-        }
-
-        .info-card li {
-            margin-bottom: 8px;
-        }
-
-        .usage-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        .usage-table th {
-            background: var(--brown);
-            color: var(--white);
-            padding: 12px;
-            text-align: left;
-            font-family: 'Fredoka', sans-serif;
-        }
-
-        .usage-table td {
-            padding: 12px;
-            border-bottom: 2px solid var(--cream);
-        }
-
-        .usage-table tr:nth-child(even) {
-            background: rgba(255,253,247,0.5);
         }
 
         /* Nutritional Table */
         .nutrition-section {
             padding: 80px 5%;
-            background: rgba(232, 213, 181, 0.6) !important;
+            background: var(--cream);
         }
 
         .nutrition-content {
@@ -447,37 +328,6 @@
             border-bottom: none;
         }
 
-        .nutrition-note {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: var(--dark-brown);
-        }
-
-        /* Details Section */
-        .details-section {
-            padding: 60px 5%;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .details-list {
-            list-style: none;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .details-list li {
-            background: rgba(255, 253, 247, 0.8);
-            padding: 15px;
-            border-radius: 15px;
-            border: 2px solid var(--brown);
-            font-size: 0.95rem;
-        }
-
         /* Back Button */
         .back-section {
             padding: 40px 5%;
@@ -506,7 +356,7 @@
 
         /* Footer */
         footer {
-            background: rgba(61, 38, 24, 0.95) !important;
+            background: var(--dark-brown);
             color: var(--cream);
             padding: 60px 5% 30px;
         }
@@ -572,9 +422,8 @@
                 text-align: center;
             }
 
-            .hero-product-image {
+            .product-images {
                 order: -1;
-                margin-bottom: 40px;
             }
 
             .product-stats {
@@ -582,10 +431,6 @@
             }
 
             .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .details-list {
                 grid-template-columns: 1fr;
             }
 
@@ -611,6 +456,172 @@
                 grid-template-columns: 1fr;
                 text-align: center;
             }
+        }
+
+        /* Carousel */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 30px;
+            border: 4px solid var(--brown);
+            background: var(--white);
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(92, 61, 46, 0.8);
+            color: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .carousel-nav:hover {
+            background: var(--brown);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-prev {
+            left: -20px;
+        }
+
+        .carousel-next {
+            right: -20px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--cream);
+            border: 2px solid var(--brown);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .carousel-dot.active {
+            background: var(--brown);
+            transform: scale(1.2);
+        }
+
+        .carousel-label {
+            text-align: center;
+            margin-top: 10px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 0.9rem;
+            color: var(--brown);
+            opacity: 0.8;
+        }
+
+        /* Texture carta */
+        body {
+            background-image: url('../white-paper-texture.jpg');
+            background-repeat: repeat;
+            background-size: 500px;
+            background-attachment: fixed;
+        }
+
+        .product-hero {
+            
+        }
+
+        .info-card {
+            background: rgba(245, 230, 200, 0.7) !important;
+        }
+
+        .nutrition-section {
+            background: rgba(232, 213, 181, 0.6) !important;
+        }
+
+        .stat-box {
+            background: rgba(255, 253, 247, 0.8) !important;
+        }
+
+        .navbar {
+            background: rgba(255, 253, 247, 0.85) !important;
+        }
+
+        footer {
+            background: rgba(61, 38, 24, 0.95) !important;
+        }
+
+        .price-tag {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--brown);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .price-note {
+            display: inline-block;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-brown);
+            background: var(--white);
+            border: 3px solid var(--brown);
+            border-radius: 16px;
+            padding: 10px 24px;
+            margin-bottom: 20px;
+            box-shadow: 4px 4px 0 var(--brown);
+        }
+
+        .cta-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
         }
 
         .stock-badge {
@@ -704,112 +715,13 @@
             margin-bottom: 8px;
             display: block;
         }
-
-        /* Carousel */
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .carousel {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 1;
-            overflow: hidden;
-            border-radius: 30px;
-            border: 4px solid var(--brown);
-            background: var(--white);
-        }
-
-        .carousel-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.6s ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .carousel-slide.active {
-            opacity: 1;
-        }
-
-        .carousel-slide img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(92, 61, 46, 0.8);
-            color: var(--white);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            z-index: 10;
-        }
-
-        .carousel-nav:hover {
-            background: var(--brown);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .carousel-prev {
-            left: -20px;
-        }
-
-        .carousel-next {
-            right: -20px;
-        }
-
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--cream);
-            border: 2px solid var(--brown);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .dot.active {
-            background: var(--brown);
-            transform: scale(1.2);
-        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar">
         <a href="../index.html" class="logo">
-            <picture>
-  <source srcset="../webp/logo_compressed.webp" type="image/webp">
-  <img src="../logo_compressed.png" alt="OKNATTY Logo">
-</picture>
+            <img src="../logo_compressed.png" alt="OKNATTY Logo">
         </a>
         <ul class="nav-links">
             <li><a href="../index.html">Home</a></li>
@@ -824,36 +736,27 @@
     <section class="product-hero">
         <div class="product-hero-content">
             <div class="product-info">
-                <span class="product-badge">🥜 30% Proteine</span>
-                <h1 class="product-title">Burro d'Arachidi</h1>
-                <p class="product-subtitle">Il superfood che non ti aspetti, in due texture</p>
-                <p class="product-description">100% arachidi tostate origine Argentina. Zero zuccheri aggiunti, zero olio di palma, zero compromessi. Scegli la texture che preferisci: vellutata e setosa, o croccante con pezzetti autentici.</p>
+                <span class="product-badge">OKNATTY Premium</span>
+                <h1 class="product-title">Cioccolato e Cocco</h1>
+                <p class="product-description">L'abbinamento perfetto tra il cacao intenso e il cocco tropicale. Una crema esotica e proteica che ti trasporta in paradiso ad ogni cucchiaio.</p>
 
                 <div class="product-weight-box">
                     <span class="weight-label">Formato</span>
-                    <span class="weight-value">400g</span>
+                    <span class="weight-value">250g</span>
                 </div>
 
                 <div class="product-stats">
                     <div class="stat-box">
-                        <span class="stat-value">30%</span>
+                        <span class="stat-value">21%</span>
                         <span class="stat-label">Proteine</span>
                     </div>
                     <div class="stat-box">
-                        <span class="stat-value">100%</span>
-                        <span class="stat-label">Arachidi</span>
+                        <span class="stat-value">Bassi</span>
+                        <span class="stat-label">Zuccheri</span>
                     </div>
                     <div class="stat-box">
-                        <span class="stat-value">0</span>
-                        <span class="stat-label">Additivi</span>
-                    </div>
-                </div>
-
-                <div class="variant-selector">
-                    <span class="variant-label">Scegli la texture:</span>
-                    <div class="variant-options">
-                        <button class="variant-btn active" data-variant="smooth">Smooth 🍦</button>
-                        <button class="variant-btn" data-variant="crunchy">Crunchy 🥜</button>
+                        <span class="stat-value">100%</span>
+                        <span class="stat-label">Naturale</span>
                     </div>
                 </div>
 
@@ -865,9 +768,9 @@
                         <input type="number" class="qty-input" value="1" min="1" max="36" id="qty-input">
                         <button class="qty-btn" onclick="updateQty(1)">+</button>
                     </div>
-                    <span class="price-tag">€8,90</span>
-                    <span class="price-note">400g</span>
-                    <a href="#" class="product-cta" onclick="event.preventDefault(); addToCart('burro-arachidi', parseInt(document.getElementById('qty-input').value) || 1)">
+                    <span class="price-tag">€9,90</span>
+                    <span class="price-note">250g</span>
+                    <a href="#" class="product-cta" onclick="event.preventDefault(); addToCart('cioccolato-cocco', parseInt(document.getElementById('qty-input').value) || 1)">
                         Acquista Ora 🛒
                     </a>
                 </div>
@@ -875,117 +778,56 @@
             
             <div class="carousel-container">
                 <div class="carousel">
-                    <div class="carousel-slide active">
-                        <picture>
-  <source srcset="../webp/Burro_Arachidi_INF_01.webp" type="image/webp">
-  <img src="../Burro_Arachidi_INF_01.jpg" alt="Burro d" loading="lazy">
-</picture>
-                    </div>
-                    <div class="carousel-slide">
-                        <picture>
-  <source srcset="../webp/Burro_Arachidi_INF_02.webp" type="image/webp">
-  <img src="../Burro_Arachidi_INF_02.jpg" alt="Burro d" loading="lazy">
-</picture>
-                    </div>
-                    <div class="carousel-slide">
-                        <picture>
-  <source srcset="../webp/Burro_Arachidi_INF_03.webp" type="image/webp">
-  <img src="../Burro_Arachidi_INF_03.jpeg" alt="Burro d" loading="lazy">
-</picture>
-                    </div>
-                    <div class="carousel-slide">
-                        <picture>
-  <source srcset="../webp/Burro_Arachidi_INF_04.webp" type="image/webp">
-  <img src="../Burro_Arachidi_INF_04.jpg" alt="Burro d" loading="lazy">
-</picture>
-                    </div>
-                    <div class="carousel-slide">
-                        <picture>
-  <source srcset="../webp/Burro_Arachidi_INF_05.webp" type="image/webp">
-  <img src="../Burro_Arachidi_INF_05.jpeg" alt="Burro d" loading="lazy">
-</picture>
-                    </div>
+                <div class="carousel-slide active">
+                    <img src="../Cioccolato_Cocco_INF_01.jpg" alt="Etichetta 1">
                 </div>
-                <button class="carousel-nav carousel-prev" onclick="changeSlide(-1)">❮</button>
-                <button class="carousel-nav carousel-next" onclick="changeSlide(1)">❯</button>
+                <div class="carousel-slide ">
+                    <img src="../Cioccolato_Cocco_INF_02.jpg" alt="Etichetta 2">
+                </div>
+                <div class="carousel-slide ">
+                    <img src="../Cioccolato_Cocco_INF_03.jpg" alt="Etichetta 3">
+                </div>
+                <div class="carousel-slide ">
+                    <img src="../Cioccolato_Cocco_INF_04.jpg" alt="Etichetta 4">
+                </div>
+                <div class="carousel-slide ">
+                    <img src="../Cioccolato_Cocco_INF_05.jpg" alt="Etichetta 5">
+                </div>
+                </div>
+                <button class="carousel-nav carousel-prev">❮</button>
+                <button class="carousel-nav carousel-next">❯</button>
                 <div class="carousel-dots">
-                    <span class="dot active" onclick="goToSlide(0)"></span>
-                    <span class="dot" onclick="goToSlide(1)"></span>
-                    <span class="dot" onclick="goToSlide(2)"></span>
-                    <span class="dot" onclick="goToSlide(3)"></span>
-                    <span class="dot" onclick="goToSlide(4)"></span>
+                <div class="carousel-dot active" data-slide="0"></div>
+                <div class="carousel-dot " data-slide="1"></div>
+                <div class="carousel-dot " data-slide="2"></div>
+                <div class="carousel-dot " data-slide="3"></div>
+                <div class="carousel-dot " data-slide="4"></div>
                 </div>
+                <p class="carousel-label">Scorri per vedere tutte le foto</p>
             </div>
+
         </div>
     </section>
 
-    <!-- Perché è Funzionale -->
+    <!-- Info Section -->
     <section class="info-section">
-        <h2 class="section-title">Perché è Funzionale</h2>
         <div class="info-grid">
             <div class="info-card">
-                <h3>💪 30% Proteine Naturali</h3>
-                <p>Il doppio delle proteine rispetto ai burri convenzionali. Supporto concreto per massa muscolare e recupero post-allenamento.</p>
+                <h3>🍽️ Come Usarlo</h3>
+                <p>Colazione, snack, dolci. Perfetto da spalmare su pane, crackers, frutta, o da aggiungere a smoothie e dolci. Una porzione consigliata e di 30g.</p>
             </div>
             <div class="info-card">
-                <h3>🥜 100% Arachidi Tostate</h3>
-                <p>Origine Argentina, selezionate per qualità superiore. Solo arachidi, nient'altro.</p>
+                <h3>👅 Gusto</h3>
+                <p>Esotico e tropicale. Una esperienza sensoriale unica che soddisfa la voglia di dolcezza senza sensi di colpa.</p>
             </div>
             <div class="info-card">
-                <h3>🚫 Zero Zuccheri Aggiunti</h3>
-                <p>Nessun edulcorante, nessun agente di carica. Solo il gusto autentico dell'arachide tostata.</p>
+                <h3>🌿 Ingredienti</h3>
+                <p>Proteine del latte, cacao magro, farina di cocco, olio di girasole, maltitolo, lecitina di soia.</p>
             </div>
             <div class="info-card">
-                <h3>🌿 Ricco di Grassi Buoni</h3>
-                <p>Alto contenuto di grassi monoinsaturi e polinsaturi, alleati per cuore e metabolismo.</p>
+                <h3>⚠️ Allergeni</h3>
+                <p>Latte, soia. Può contenere tracce di noci, arachidi e glutine.</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Come Usarlo -->
-    <section class="info-section">
-        <h2 class="section-title">Come Usarlo</h2>
-        <div class="info-card" style="max-width: 900px; margin: 0 auto;">
-            <table class="usage-table">
-                <tr>
-                    <th>Momento</th>
-                    <th>Uso ideale</th>
-                </tr>
-                <tr>
-                    <td><strong>Pre-workout</strong></td>
-                    <td>Un cucchiaio puro o su pane integrale per carburante immediato</td>
-                </tr>
-                <tr>
-                    <td><strong>Post-workout</strong></td>
-                    <td>Aggiunto allo shake proteico per consistenza cremosa</td>
-                </tr>
-                <tr>
-                    <td><strong>Colazione</strong></td>
-                    <td>Spalmato su toast, porridge o pancake</td>
-                </tr>
-                <tr>
-                    <td><strong>Smoothie bowl</strong></td>
-                    <td>Mescolato in frullati per texture densa e nutriente</td>
-                </tr>
-                <tr>
-                    <td><strong>Snack clean</strong></td>
-                    <td>Cucchiaio diretto quando hai bisogno di una pausa gustosa</td>
-                </tr>
-                <tr>
-                    <td><strong>In cucina</strong></td>
-                    <td>Base per salse asiatiche, dressing, hummus di arachidi</td>
-                </tr>
-            </table>
-            <p style="margin-top: 20px; font-style: italic; font-size: 0.95rem;"><strong>Consiglio:</strong> in caso di separazione naturale dell'olio in superficie, mescolare bene prima dell'uso. Conservare in luogo fresco e asciutto.</p>
-        </div>
-    </section>
-
-    <!-- La Nostra Selezione -->
-    <section class="info-section">
-        <h2 class="section-title">La Nostra Selezione</h2>
-        <div class="info-card" style="max-width: 900px; margin: 0 auto; text-align: center;">
-            <p style="font-size: 1.1rem; line-height: 1.8;">Abbiamo scelto <strong>arachidi tostate di alta qualità</strong>, macinate fino a ottenere la consistenza desiderata. La versione <strong>Smooth</strong> è vellutata e setosa, perfetta per spalmare. La versione <strong>Crunchy</strong> conserva pezzetti di arachide per un'esperienza croccante.</p>
-            <p style="margin-top: 20px; font-size: 1.1rem; line-height: 1.8;">Entrambe le varianti sono <strong>confezionate in vetro</strong> per preservare freschezza e sostenibilità, completamente <strong>Made in Italy</strong>.</p>
         </div>
     </section>
 
@@ -996,81 +838,41 @@
             <table class="nutrition-table">
                 <tr>
                     <th>Valore</th>
-                    <th>Quantità</th>
-                    <th>AR*</th>
+                    <th>Quantita</th>
                 </tr>
                 <tr>
                     <td>Energia</td>
-                    <td>2569 kJ / 620 kcal</td>
-                    <td>30,6%</td>
+                    <td>~450 kcal / 1880 kJ</td>
                 </tr>
                 <tr>
                     <td>Grassi</td>
-                    <td>50 g</td>
-                    <td>71,4%</td>
+                    <td>~28g</td>
                 </tr>
                 <tr>
                     <td>di cui saturi</td>
-                    <td>7,4 g</td>
-                    <td>37,0%</td>
+                    <td>~6g</td>
                 </tr>
                 <tr>
                     <td>Carboidrati</td>
-                    <td>9,0 g</td>
-                    <td>3,5%</td>
+                    <td>~25g</td>
                 </tr>
                 <tr>
                     <td>di cui zuccheri</td>
-                    <td>5,7 g</td>
-                    <td>6,3%</td>
-                </tr>
-                <tr>
-                    <td>Fibre</td>
-                    <td>7,0 g</td>
-                    <td>—</td>
+                    <td>~3g</td>
                 </tr>
                 <tr>
                     <td>Proteine</td>
-                    <td>30 g</td>
-                    <td>60,0%</td>
+                    <td>21%</td>
                 </tr>
                 <tr>
                     <td>Sale</td>
-                    <td>0,30 g</td>
-                    <td>5,0%</td>
+                    <td>~0.3g</td>
                 </tr>
             </table>
-            <p class="nutrition-note">* Assunzioni di riferimento di un adulto medio (8400kJ/2000kcal)</p>
+            <p style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--dark-brown);">
+                I valori possono variare leggermente in base al gusto specifico. Consulta sempre l'etichetta del prodotto.
+            </p>
         </div>
-    </section>
-
-    <!-- Ingredienti e Allergeni -->
-    <section class="info-section">
-        <div class="info-grid">
-            <div class="info-card">
-                <h3>🌿 Ingredienti</h3>
-                <p><strong>100% arachidi tostate</strong> (origine Argentina)</p>
-            </div>
-            <div class="info-card">
-                <h3>⚠️ Allergeni</h3>
-                <p><strong>Contiene arachidi.</strong> Può contenere tracce di altra frutta a guscio, sesamo e soia.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Dettagli Prodotto -->
-    <section class="details-section">
-        <h2 class="section-title" style="margin-bottom: 20px;">Dettagli Prodotto</h2>
-        <ul class="details-list">
-            <li><strong>Peso netto:</strong> 400g</li>
-            <li><strong>Prezzo:</strong> €8,90</li>
-            <li><strong>Scadenza:</strong> 18 mesi dalla produzione</li>
-            <li><strong>Conservazione:</strong> Luogo fresco e asciutto</li>
-            <li><strong>Packaging:</strong> Barattolo in vetro, tappo in alluminio</li>
-            <li><strong>Prodotto da:</strong> CREMITALY SRLS — Lercara Friddi (PA)</li>
-            <li><strong>Paese di origine:</strong> Italia</li>
-            <li><strong>Certificazione:</strong> Made in Italy 🇮🇹</li>
-        </ul>
     </section>
 
     <!-- Back Section -->
@@ -1084,10 +886,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-brand">
-                <picture>
-  <source srcset="../webp/logo_compressed.webp" type="image/webp">
-  <img src="../logo_compressed.png" alt="OKNATTY">
-</picture>
+                <img src="../logo_compressed.png" alt="OKNATTY">
                 <p>OKNATTY - Creme spalmabili proteiche che uniscono gusto e benessere. Il tuo alleato per una colazione, uno snack o un post-workout perfetto.</p>
             </div>
             <div class="footer-links">
@@ -1128,52 +927,72 @@
     </footer>
 
     <script>
-        // Variant Selector
-        const variantBtns = document.querySelectorAll('.variant-btn');
-        
-        variantBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                variantBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+        // Carousel
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+        let autoPlayInterval;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            showSlide((currentSlide + 1) % totalSlides);
+        }
+
+        function prevSlide() {
+            showSlide((currentSlide - 1 + totalSlides) % totalSlides);
+        }
+
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(nextSlide, 3000);
+        }
+
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+
+        document.querySelector('.carousel-next').addEventListener('click', () => {
+            stopAutoPlay();
+            nextSlide();
+            startAutoPlay();
+        });
+
+        document.querySelector('.carousel-prev').addEventListener('click', () => {
+            stopAutoPlay();
+            prevSlide();
+            startAutoPlay();
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                stopAutoPlay();
+                showSlide(index);
+                startAutoPlay();
             });
         });
 
-        // Carousel
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.dot');
-        const totalSlides = slides.length;
+        // Pause on hover
+        document.querySelector('.carousel').addEventListener('mouseenter', stopAutoPlay);
+        document.querySelector('.carousel').addEventListener('mouseleave', startAutoPlay);
 
-        function showSlide(index) {
-            slides.forEach(s => s.classList.remove('active'));
-            dots.forEach(d => d.classList.remove('active'));
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
-        }
-
-        function changeSlide(direction) {
-            currentSlide += direction;
-            if (currentSlide >= totalSlides) currentSlide = 0;
-            if (currentSlide < 0) currentSlide = totalSlides - 1;
-            showSlide(currentSlide);
-        }
-
-        function goToSlide(index) {
-            currentSlide = index;
-            showSlide(currentSlide);
-        }
-
-        // Auto-play
-        setInterval(() => {
-            changeSlide(1);
-        }, 3000);
+        startAutoPlay();
 
         // Quantity
         function updateQty(change) {
             const input = document.getElementById('qty-input');
+            if (!input) return;
             let val = parseInt(input.value) || 1;
             val += change;
-            const max = parseInt(input.max);
+            const max = parseInt(input.max) || 99;
             if (val < 1) val = 1;
             if (val > max) val = max;
             input.value = val;
