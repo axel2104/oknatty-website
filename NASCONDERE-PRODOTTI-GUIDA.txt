@@ -1,0 +1,79 @@
+================================================================================
+OKNATTY - GUIDA: NASCONDERE PRODOTTI DAL SITO ELEMENT FOR
+================================================================================
+
+Dopo aver importato i prodotti OKNATTY nello store Shopify di ELEMENT FOR,
+devi fare un passaggio aggiuntivo per EVITARE che appaiano sul sito ELEMENT FOR.
+
+================================================================================
+PERCHE' E' NECESSARIO
+================================================================================
+
+Lo store Shopify bu4ksb-yb.myshopify.com e' usato per ELEMENT FOR (integratori).
+Se importi i prodotti OKNATTY nello stesso store, apparirebbero automaticamente
+anche sul sito Shopify di ELEMENT FOR, creando confusione.
+
+La soluzione: rimuovere i prodotti OKNATTY dal canale "Online Store",
+lasciandoli solo sul canale "Headless" (che alimenta il carrello del sito
+OKNATTY).
+
+================================================================================
+PASSAGGI
+================================================================================
+
+**Step 1 - Filtra i prodotti OKNATTY:**
+1. Dal pannello admin Shopify, vai su Products
+2. Clicca su "Filters" (in alto)
+3. Seleziona "Vendor" = "OKNATTY"
+4. Clicca "Done"
+5. Vedi solo i prodotti OKNATTY (8 prodotti)
+
+**Step 2 - Seleziona tutti i prodotti OKNATTY:**
+1. Spunta la casella in alto a sinistra della lista (seleziona tutti)
+2. Se hai molti prodotti, potrebbe chiedere "Select all 8 products" - clicca
+
+**Step 3 - Rimuovi dal canale Online Store:**
+1. Clicca "Actions" (in alto, sopra la lista)
+2. Seleziona "Remove from sales channels"
+3. Si apre una finestra con i canali disponibili
+4. Seleziona SOLO "Online Store" (NON selezionare Headless)
+5. Clicca "Remove"
+
+**Step 4 - Verifica:**
+1. Clicca su un prodotto OKNATTY
+2. Scorri fino a "Publishing" o "Sales channels"
+3. Deve apparire solo "Headless" (o nessun canale se non hai ancora
+   configurato Headless)
+4. NON deve apparire "Online Store"
+
+================================================================================
+ALTERNATIVA: MODIFICA SINGOLO PRODOTTO
+================================================================================
+
+Se preferisci fare un prodotto alla volta:
+
+1. Vai su Products, clicca un prodotto OKNATTY
+2. Scorri fino a "Publishing" (sezione in basso)
+3. Clicca "Manage"
+4. Rimuovi la spunta da "Online Store"
+5. Lascia la spunta su "Headless" (se presente)
+6. Salva
+
+================================================================================
+IMPORTANTE
+================================================================================
+
+- Se rimuovi un prodotto da TUTTI i canali (compreso Headless), il carrello
+  OKNATTY non potra' piu' vederlo
+- Devi lasciare i prodotti su almeno un canale perche' siano accessibili
+- Il canale giusto per OKNATTY e' "Headless"
+
+================================================================================
+DOPO AVER FATTO QUESTO
+================================================================================
+
+1. Carica le foto per ogni prodotto OKNATTY
+2. Verifica che gli handle siano corretti
+3. Testa il carrello su http://localhost:8765
+
+================================================================================

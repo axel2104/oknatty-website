@@ -1,0 +1,114 @@
+================================================================================
+OKNATTY - CONFRONTO METODI: HEADLESS CHANNEL vs SHOPIFY CLI
+================================================================================
+
+Ecco le due opzioni per ottenere il token Storefront API e gestire il carrello.
+
+================================================================================
+OPZIONE A: HEADLESS CHANNEL (CONSIGLIATA PER OKNATTY)
+================================================================================
+
+**Cos'e':**
+Un'app gratuita ufficiale di Shopify che installi dal tuo pannello admin.
+Crea uno "storefront" virtuale e ti fornisce il token API.
+
+**Passaggi:**
+1. Dal pannello admin Shopify, vai su Settings > Apps and sales channels
+2. Clicca "Shopify App Store"
+3. Cerca "Headless" e installa l'app di Shopify
+4. Crea uno storefront chiamato "OKNATTY"
+5. Vai su Storefront API > Manage > Edit permissions
+6. Abilita: read products, read checkouts, write checkouts, read customers
+7. Salva e copia il token
+
+**Pro:**
+- Semplice, tutto via interfaccia grafica
+- Non serve installare nulla sul computer
+- Token visibile e copiabile immediatamente
+- Gestione permissions con checkbox
+
+**Contro:**
+- Se perdi il token, devi rigenerarlo manualmente
+- Meno automatizzabile
+
+**Tempo:** 10 minuti
+**Difficolta:** Facile (clicca e copia)
+
+================================================================================
+OPZIONE B: SHOPIFY CLI
+================================================================================
+
+**Cos'e':**
+Un tool da riga di comando che installi sul tuo Mac. Serve principalmente
+per sviluppare app Shopify, temi Hydrogen, o gestire store via API.
+
+**Passaggi:**
+1. Installa CLI sul tuo Mac:
+   npm install -g @shopify/cli
+   
+   Oppure via Homebrew:
+   brew tap shopify/shopify
+   brew install shopify-cli
+
+2. Autenticati con il tuo store:
+   shopify auth login --store TUO-STORE.myshopify.com
+
+3. Per ottenere un token Storefront API, devi:
+   - Creare un'app custom via CLI
+   - Configurare le permissions via file
+   - Deployare l'app
+   - Estrarre il token dall'output CLI
+
+   Oppure usare Hydrogen (che gestisce il token automaticamente):
+   npm create @shopify/hydrogen@latest
+   shopify hydrogen link --store TUO-STORE.myshopify.com
+   shopify hydrogen env pull
+
+**Pro:**
+- Automatizzabile e versionabile
+- Integrato con CI/CD
+- Gestisce anche deploy e hosting
+- Obbligatorio se vuoi usare Hydrogen
+
+**Contro:**
+- Richiede competenze terminale/CLI
+- Piu' passaggi
+- Per un semplice token API, e' overkill
+- Se vuoi solo il token per un sito statico, devi comunque creare un'app
+
+**Tempo:** 30-60 minuti (prima volta)
+**Difficolta:** Intermedia (richiede familiarita' con terminale)
+
+================================================================================
+CONFRONTO DIRETTO PER OKNATTY
+================================================================================
+
+| Cosa vuoi fare?          | Headless Channel | Shopify CLI |
+|--------------------------|------------------|-------------|
+| Ottenere token API       | 5 minuti         | 30 minuti   |
+| Gestire token            | GUI              | File/CLI    |
+| Sito statico HTML        | Perfetto         | Overkill    |
+| Hydrogen/React storefront| Non serve        | Necessario  |
+| App Shopify              | Non serve        | Necessario  |
+| Tema Liquid              | Non serve        | Necessario  |
+| Automazione CI/CD        | Limitata         | Completa    |
+
+================================================================================
+RACCOMANDAZIONE
+================================================================================
+
+Per OKNATTY, che e' un sito statico HTML con 8 prodotti, il metodo
+**Headless Channel e' la scelta giusta.**
+
+Shopify CLI e' pensato per:
+- Sviluppatori che creano app per l'App Store
+- Team che usano Hydrogen (React) per storefront custom
+- Chi gestisce molti store via automazione
+- CI/CD e deploy automatizzati
+
+Se in futuro vorrai migrare a Hydrogen o creare un'app Shopify,
+allora Shopify CLI diventera' necessario. Ma per adesso, per
+aggiungere solo il carrello al sito attuale, Headless Channel e'
+piu' veloce e diretto.
+
+================================================================================

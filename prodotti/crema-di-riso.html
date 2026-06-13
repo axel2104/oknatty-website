@@ -711,7 +711,7 @@
                     </div>
                     <span class="price-tag">€13,90</span>
                     <span class="price-note">1 kg</span>
-                    <a href="#" class="product-cta">
+                    <a href="#" class="product-cta" onclick="event.preventDefault(); addToCart('crema-di-riso', parseInt(document.getElementById('qty-input').value) || 1)">
                         Acquista Ora 🛒
                     </a>
                 </div>
@@ -1006,5 +1006,6 @@
             input.value = val;
         }
     </script>
+    <script src="../js/shopify-cart.js"></script>
 </body>
 </html>

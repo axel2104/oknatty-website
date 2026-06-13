@@ -301,6 +301,28 @@
             transform: translateY(-2px);
         }
 
+        .cart-link {
+            position: relative;
+            font-size: 1.2rem !important;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--brown);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka', sans-serif;
+        }
+
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -1163,6 +1185,7 @@
             <li><a href="#home">Home</a></li>
             <li><a href="#prodotti">Prodotti</a></li>
             <li><a href="chi-siamo.html">Chi Siamo</a></li>
+            <li><a href="#" class="cart-link" onclick="openCartDrawer(event)" title="Carrello">🛒 <span class="cart-badge" style="display:none">0</span></a></li>
             <li><a href="#contatti" class="nav-cta">Ordina Ora</a></li>
         </ul>
         <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
@@ -1545,5 +1568,6 @@
 
         startHeroAutoPlay();
     </script>
+    <script src="js/shopify-cart.js"></script>
 </body>
 </html>
