@@ -1,0 +1,103 @@
+================================================================================
+OKNATTY - GUIDA DEPLOY SU CLOUDFLARE PAGES
+================================================================================
+
+Questa guida ti spiega come mettere il sito OKNATTY online con Cloudflare
+Pages (CDN globale gratuito).
+
+Tempo stimato: 5 minuti.
+
+================================================================================
+STEP 1: CREA UN ACCOUNT CLOUDFLARE
+================================================================================
+
+1. Vai su: https://dash.cloudflare.com/sign-up
+2. Inserisci email e password
+3. Conferma l'email (controlla la posta)
+4. Non serve aggiungere un dominio per usare Pages
+
+================================================================================
+STEP 2: CREA IL PROGETTO PAGES
+================================================================================
+
+1. Dal dashboard Cloudflare, clicca "Pages" nel menu a sinistra
+2. Clicca "Create a project"
+3. Seleziona "Connect to Git"
+4. Autorizza Cloudflare ad accedere al tuo GitHub
+5. Seleziona il repository: "axel2104/oknatty-website"
+6. Clicca "Begin setup"
+
+================================================================================
+STEP 3: CONFIGURA IL DEPLOY
+================================================================================
+
+1. Project name: oknatty-website (o quello che preferisci)
+2. Production branch: main
+3. Build settings:
+   - Framework preset: None
+   - Build command: lascia VUOTO
+   - Build output directory: .
+   (il punto significa "root directory", perché il sito è già statico)
+4. Clicca "Save and Deploy"
+
+================================================================================
+STEP 4: ASPETTA IL DEPLOY
+================================================================================
+
+Cloudflare clona il repo, fa il deploy e ti assegna un URL temporaneo tipo:
+https://oknatty-website.pages.dev
+
+Questo processo dura circa 1-2 minuti.
+
+================================================================================
+STEP 5: VERIFICA
+================================================================================
+
+1. Apri l'URL assegnato (es. https://oknatty-website.pages.dev)
+2. Verifica che il sito si carichi correttamente
+3. Clicca un prodotto e testa il carrello
+4. Il carrello deve funzionare esattamente come in locale
+
+================================================================================
+STEP 6: DOMINIO PERSONALIZZATO (OPZIONALE)
+================================================================================
+
+Se vuoi usare un dominio custom (es. oknatty.com):
+
+1. Vai su Pages > oknatty-website > Custom domains
+2. Clicca "Set up a custom domain"
+3. Inserisci il tuo dominio
+4. Segui le istruzioni per configurare i DNS
+
+NOTA: se il dominio è già su Cloudflare, la configurazione è automatica.
+Se è su un altro registrar, devi cambiare i nameserver.
+
+================================================================================
+NOTE IMPORTANTI
+================================================================================
+
+- Ogni volta che fai push su GitHub (git push), Cloudflare rifà il deploy
+  automaticamente in circa 1 minuto
+- Il piano gratuito include: banda illimitata, SSL automatico, CDN globale
+- Le immagini grandi nel repo saranno servite via CDN ma occupano spazio
+  nel repo. Se il repo diventa troppo pesante, considera di spostare le
+  immagini su Cloudflare R2 (vedi guida separata)
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+**Il sito non si carifica:**
+- Verifica che il build command sia vuoto e l'output directory sia "."
+- Controlla che i file HTML siano nella root del repo
+
+**Il carrello non funziona:**
+- Il token Shopify e il dominio sono nel file js/shopify-cart.js
+- Se hai modificato il file dopo il deploy, fai push su GitHub e aspetta
+  1 minuto che Cloudflare aggiorni
+
+**Immagini non si vedono:**
+- Le immagini sono nel repo, quindi dovrebbero essere incluse automaticamente
+- Se mancano, verifica che siano state pushate su GitHub
+
+================================================================================

@@ -30,7 +30,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files (can opt-in committing if needed)
 .env*
 
 # vercel
@@ -39,4 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# backup originali immagini
 public-backup-original/
+
+# Escludi PNG originali grandi (mantieni solo quelli compressi)
+*.png
+!*_compressed.png
+!MOCKUP/*.png
+
+# Escludi cartella etichette
+OKNATTY_etichette/

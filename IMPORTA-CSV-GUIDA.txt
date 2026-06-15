@@ -1,0 +1,83 @@
+================================================================================
+OKNATTY - GUIDA IMPORTAZIONE PRODOTTI CSV SU SHOPIFY
+================================================================================
+
+Ho creato il file CSV con tutti i 8 prodotti OKNATTY pronti per l'importazione.
+
+**File:** /Users/alexpop/Downloads/ELEMENT/OKNATTY/landing-page/OKNATTY-prodotti-import.csv
+
+================================================================================
+PASSAGGI PER IMPORTARE
+================================================================================
+
+1. Dal pannello admin Shopify, vai su "Products"
+2. Clicca il pulsante "Import" (in alto a destra)
+3. Clicca "Add file" e seleziona il file CSV
+4. Shopify mostra un'anteprima dei prodotti
+5. Clicca "Import products"
+
+================================================================================
+COSA CONTIENE IL CSV
+================================================================================
+
+Ogni prodotto ha:
+- Handle corretto (es: cioccolato-fondente)
+- Titolo
+- Descrizione
+- Prezzo
+- Peso (grammi)
+- Quantita' in stock: 36 pezzi
+- Vendor: OKNATTY
+- Tags: proteica, naturale, etc.
+- SEO Title e Description
+
+================================================================================
+DOPO L'IMPORTAZIONE
+================================================================================
+
+1. **Carica le foto:**
+   Il CSV non include le immagini. Dopo l'importazione:
+   - Vai su Products
+   - Clicca ogni prodotto
+   - Aggiungi le foto nelle varianti
+
+2. **Verifica gli handle:**
+   Dopo l'importazione, controlla che gli URL handle siano corretti:
+   - cioccolato-fondente
+   - cioccolato-cocco
+   - caramello-salato
+   - crema-nocciola-bianca
+   - cacao-nocciola
+   - crema-cocco-bar
+   - burro-arachidi
+   - crema-di-riso
+
+   Se Shopify ha modificato qualche handle (es. aggiungendo numeri),
+   modificalo manualmente in "Search engine listing" > "URL handle".
+
+3. **Aggiungi varianti (opzionale):**
+   Il Burro Arachidi ha "Smooth o Crunchy". Se vuoi questa opzione:
+   - Modifica il prodotto Burro Arachidi
+   - Aggiungi un'opzione "Texture" con valori "Smooth" e "Crunchy"
+   - Crea le varianti corrispondenti
+
+================================================================================
+TEST DEL CARRELLO
+================================================================================
+
+Dopo aver importato i prodotti:
+
+1. Avvia il server locale:
+   cd /Users/alexpop/Downloads/ELEMENT/OKNATTY/landing-page
+   python3 -m http.server 8765
+
+2. Apri http://localhost:8765
+
+3. Clicca un prodotto, poi "Acquista Ora"
+
+4. Se tutto funziona:
+   - Appare "Aggiunto al carrello"
+   - Si apre il drawer
+   - Clicca "Vai al Checkout" per verificare il checkout Shopify
+
+================================================================================

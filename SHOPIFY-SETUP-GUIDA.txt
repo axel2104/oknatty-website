@@ -1,0 +1,203 @@
+================================================================================
+OKNATTY - GUIDA ATTIVAZIONE CARRELLO SHOPIFY (AGGIORNATA 2026)
+================================================================================
+
+ATTENZIONE: A partire da gennaio 2026, Shopify ha modificato il modo di
+ottenere i token API. Il vecchio metodo "Develop apps" nel pannello admin
+non e' piu' disponibile. Questa guida usa il metodo attuale: il canale
+"Headless" di Shopify.
+
+Tempo stimato: 30-45 minuti.
+
+================================================================================
+STEP 1: TROVA IL TUO DOMINIO SHOPIFY
+================================================================================
+
+1. Accedi al tuo pannello admin Shopify: https://admin.shopify.com
+2. Il dominio e' visibile nell'URL o in Settings > Domains
+3. Avra' questo formato: TUO-STORE.myshopify.com
+4. Annotalo, ti servira' per lo Step 5
+
+Esempio: se il tuo store si chiama "oknatty", il dominio sara':
+oknatty.myshopify.com
+
+================================================================================
+STEP 2: INSTALLA IL CANALE HEADLESS
+================================================================================
+
+Il canale "Headless" e' un'app gratuita di Shopify che permette di creare
+storefront custom e ottenere il token Storefront API.
+
+1. Dal pannello admin Shopify, vai su "Settings" (in basso a sinistra)
+2. Vai su "Apps and sales channels"
+3. Clicca su "Shopify App Store" (in alto a destra)
+4. Cerca "Headless" nella barra di ricerca
+5. Trova l'app "Headless" (pubblicata da Shopify)
+6. Clicca "Install"
+7. Conferma l'installazione
+
+Dopo l'installazione, vedrai una nuova sezione "Storefronts" nel menu.
+
+================================================================================
+STEP 3: CREA UNO STOREFRONT E OTTIENI IL TOKEN
+================================================================================
+
+1. Dal menu laterale, clicca su "Headless" (sotto Sales channels)
+2. Clicca su "Create storefront"
+3. Dai un nome: OKNATTY Storefront
+4. Clicca "Create"
+5. Nella lista storefront, clicca "Manage" accanto al tuo storefront
+6. Vai su "Storefront API"
+7. Clicca "Edit" per aggiornare le permissions
+8. Spunta le seguenti autorizzazioni:
+    - unauthenticated_read_product_listings
+    - unauthenticated_read_product_inventory
+    - unauthenticated_read_product_tags
+    - unauthenticated_read_customers
+    - unauthenticated_write_customers
+    - unauthenticated_read_content
+    - unauthenticated_read_checkouts
+    - unauthenticated_write_checkouts
+9. Clicca "Save"
+10. Torna alla pagina Storefront API
+11. Copia il "Storefront API access token" mostrato
+
+IMPORTANTE: questo token si mostra una sola volta. Se lo perdi, devi
+generarne uno nuovo. Conservalo in un posto sicuro.
+
+================================================================================
+STEP 4: CARICA I PRODOTTI SU SHOPIFY
+================================================================================
+
+Devi caricare i tuoi 8 prodotti su Shopify. L'aspetto CRITICO e' che il
+"handle" di ogni prodotto corrisponda ESATTAMENTE a quelli nel codice.
+
+1. Dal pannello admin, vai su "Products"
+2. Clicca "Add product" per ogni prodotto
+3. Inserisci:
+   - Titolo
+   - Descrizione
+   - Prezzo (come da listino OKNATTY)
+   - Foto prodotto
+   - Quantita' disponibile (stock)
+
+4. IMPORTANTE - Imposta il corretto "handle":
+   Vai in fondo alla pagina prodotto, clicca "Edit" accanto a
+   "Search engine listing" (SEO). Il campo "URL handle" deve essere:
+
+   Prodotto                    Handle su Shopify
+   ----------------------------------------------------------------
+   Cioccolato Fondente         cioccolato-fondente
+   Cioccolato Cocco            cioccolato-cocco
+   Caramello Salato            caramello-salato
+   Crema Nocciola Bianca       crema-nocciola-bianca
+   Cacao Nocciola              cacao-nocciola
+   Crema Cocco Bar             crema-cocco-bar
+   Burro Arachidi              burro-arachidi
+   Crema di Riso               crema-di-riso
+
+   NOTA: se il handle su Shopify e' diverso, il carrello non trovera'
+   il prodotto. Puoi usare qualsiasi handle, ma poi devi aggiornare
+   anche il file js/shopify-cart.js (vedi Step 5).
+
+5. Per ogni prodotto, assicurati di avere almeno una "variante" (anche
+   solo una variante di default). Il carrello usa la prima variante
+   disponibile.
+
+================================================================================
+STEP 5: AGGIORNA IL FILE DI CONFIGURAZIONE
+================================================================================
+
+File da modificare: js/shopify-cart.js (nella cartella landing-page)
+
+Apri il file e cerca queste 2 righe in cima:
+
+    domain: 'TUO-DOMINIO.myshopify.com',
+    storefrontToken: 'TUO-STOREFRONT-TOKEN',
+
+Sostituisci con i tuoi dati reali:
+
+    domain: 'oknatty.myshopify.com',           <-- il TUO dominio
+    storefrontToken: 'xxxxxxxxxxxxxxxx',       <-- il TUO token
+
+Salva il file. Questa e' l'unica modifica necessaria.
+
+================================================================================
+STEP 6: VERIFICA CHE FUNZIONI
+================================================================================
+
+1. Avvia il server locale (se non e' gia' attivo):
+   cd /Users/alexpop/Downloads/ELEMENT/OKNATTY/landing-page
+   python3 -m http.server 8765
+
+2. Apri il browser su http://localhost:8765
+
+3. Clicca su un prodotto, poi su "Acquista Ora"
+
+4. Se tutto e' configurato correttamente:
+   - Appare una notifica "Aggiunto al carrello"
+   - Si apre il drawer del carrello
+   - Vedi il prodotto con prezzo e quantita'
+   - Cliccando "Vai al Checkout" ti porta al checkout Shopify
+
+5. Se vedi un errore:
+   - Apri la console del browser (F12 > Console)
+   - Guarda il messaggio di errore
+   - I problemi piu' comuni sono:
+     * Dominio sbagliato
+     * Token sbagliato
+     * Handle prodotto non corrispondente
+     * Prodotto non ha varianti
+
+================================================================================
+PREZZI PRODOTTI (per riferimento quando carichi su Shopify)
+================================================================================
+
+Prodotto                    Prezzo      Peso
+----------------------------------------------------------------
+Cioccolato Fondente         €9,90       250g
+Cioccolato Cocco            €9,90       250g
+Caramello Salato            €9,90       250g
+Crema Nocciola Bianca       €9,90       250g
+Cacao Nocciola              €9,90       250g
+Crema Cocco Bar             €9,90       250g
+Burro Arachidi              €8,90       400g
+Crema di Riso               €13,90      250g
+
+================================================================================
+NOTE IMPORTANTI
+================================================================================
+
+- Il carrello usa la Shopify Storefront API, che e' GRATUITA
+- Non serve un piano Shopify specifico, ma serve un account attivo
+- I dati del carrello (prodotti, quantita') restano sul sito OKNATTY
+  in localStorage (memoria del browser). Il checkout avviene su Shopify.
+- Se cambi prezzi su Shopify, il sito OKNATTY li legge in tempo reale
+  (non devi aggiornare il codice)
+- Se cambi foto o descrizioni su Shopify, il sito OKNATTY NON le vede
+  (le foto e descrizioni restano quelle del sito statico)
+
+================================================================================
+ALTERNATIVA: SHOPIFY CLI
+================================================================================
+
+Se preferisci usare Shopify CLI invece del Headless channel, puoi usare:
+
+    npm install -g @shopify/cli
+    shopify hydrogen init
+
+Questo crea un progetto Hydrogen (React) che gestisce automaticamente
+il token. Ma per OKNATTY, che e' un sito statico HTML, il metodo
+Headless channel e' piu' semplice e diretto.
+
+================================================================================
+CONTATTI E SUPPORTO
+================================================================================
+
+Se qualcosa non funziona, controlla prima:
+1. Console del browser (F12) per errori JavaScript
+2. Che il dominio sia scritto correttamente (senza https://)
+3. Che il token sia completo (copia tutto, non troncare)
+4. Che i handle su Shopify corrispondano esattamente a quelli nel codice
+
+================================================================================
