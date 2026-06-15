@@ -414,7 +414,7 @@ function injectCartStyles() {
             max-width: 90vw;
             height: 100%;
             background: var(--white, #FFFDF7);
-            background-image: url('white-paper-texture.jpg');
+            background-image: url('white-paper-texture.webp');
             background-repeat: repeat;
             background-size: 500px;
             display: flex;
