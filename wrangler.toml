@@ -1,0 +1,8 @@
+name = "oknatty-website"
+compatibility_date = "2026-06-15"
+
+[build]
+command = "npm run build"
+
+[[env.production]]
+name = "oknatty-website"
