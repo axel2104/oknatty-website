@@ -205,6 +205,9 @@ function animateSingleBar(bar) {
 
 // Avvia animazioni al caricamento della pagina
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Animations.js caricato');
+    console.log('Elementi .animate-section trovati:', document.querySelectorAll('.animate-section').length);
+    console.log('Elementi .nutrition-bar trovati:', document.querySelectorAll('.nutrition-bar').length);
     initAnimations();
 });
 
