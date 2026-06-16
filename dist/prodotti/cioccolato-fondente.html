@@ -745,53 +745,6 @@
             margin-bottom: 8px;
             display: block;
         }
-    
-        /* Barre nutrizionali animate */
-        .nutrition-bar {
-            width: 100%;
-            margin: 8px 0;
-        }
-        
-        .bar-label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--accent);
-        }
-        
-        .bar-track {
-            width: 100%;
-            height: 20px;
-            background: var(--cream);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 2px solid var(--accent);
-        }
-        
-        .bar-fill {
-            height: 100%;
-            background: var(--accent);
-            border-radius: 10px;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        
-        .bar-value {
-            font-weight: 700;
-            font-size: 0.85rem;
-        }
-        
-        /* Animazione numeri */
-        .animate-number {
-            display: inline-block;
-        }
-        
-        .animate-section {
-            opacity: 1;
-        }
 </style>
 </head>
 <body>
@@ -974,114 +927,59 @@
     <section class="nutrition-section">
         <div class="nutrition-content">
             <h2 class="nutrition-title">Valori Nutrizionali (per <span class="animate-number" data-target="100" data-suffix="g">0</span>g)</h2>
-            <div class="nutrition-bars-container">
-            <div class="nutrition-bar animate-section" data-target="447" data-max="2000" data-unit="kcal">
-                <div class="bar-label">
-                    <span>Energia</span>
-                    <span class="bar-value">0 kcal</span>
-                </div>
-                <div class="bar-track">
-                    <div class="bar-fill"></div>
-                </div>
-                <div class="bar-ar"><span class="animate-number" data-target="22.1" data-suffix="%">0%</span></div>
-            </div>
-            <div class="nutrition-bar animate-section" data-target="29" data-max="70" data-unit="g">
-                <div class="bar-label">
-                    <span>Grassi</span>
-                    <span class="bar-value">0 g</span>
-                </div>
-                <div class="bar-track">
-                    <div class="bar-fill"></div>
-                </div>
-                <div class="bar-ar"><span class="animate-number" data-target="41.4" data-suffix="%">0%</span></div>
-            </div>
-            <div class="nutrition-bar animate-section" data-target="4.1" data-max="20" data-unit="g">
-                <div class="bar-label">
-                    <span>Saturi</span>
-                    <span class="bar-value">0 g</span>
-                </div>
-                <div class="bar-track">
-                    <div class="bar-fill"></div>
-                </div>
-                <div class="bar-ar"><span class="animate-number" data-target="20.5" data-suffix="%">0%</span></div>
-            </div>
-            <div class="nutrition-bar animate-section" data-target="38" data-max="260" data-unit="g">
-                <div class="bar-label">
-                    <span>Carboidrati</span>
-                    <span class="bar-value">0 g</span>
-                </div>
-                <div class="bar-track">
-                    <div class="bar-fill"></div>
-                </div>
-                <div class="bar-ar"><span class="animate-number" data-target="14.6" data-suffix="%">0%</span></div>
-            </div>
-            <div class="nutrition-bar animate-section" data-target="1.4" data-max="90" data-unit="g">
-                <div class="bar-label">
-                    <span>Zuccheri</span>
-                    <span class="bar-value">0 g</span>
-                </div>
-                <div class="bar-track">
-                    <div class="bar-fill"></div>
-                </div>
-                <div class="bar-ar"><span class="animate-number" data-target="1.6" data-suffix="%">0%</span></div>
-            </div>
-            <div class="nutrition-bar animate-section" data-target="36" data-max="50" data-unit="g">
-                <div class="bar-label">
-                    <span>Polioli</span>
-                    <span class="bar-value">0 g</span>
-                </div>
-                <div class="bar-track">
-                    <div class="bar-fill"></div>
-                </div>
-                <div class="bar-ar"><span class="animate-number" data-target="0" data-suffix="%">0%</span></div>
-            </div>
-            <div class="nutrition-bar animate-section" data-target="3.8" data-max="30" data-unit="g">
-                <div class="bar-label">
-                    <span>Fibre</span>
-                    <span class="bar-value">0 g</span>
-                </div>
-                <div class="bar-track">
-                    <div class="bar-fill"></div>
-                </div>
-                <div class="bar-ar"><span class="animate-number" data-target="0" data-suffix="%">0%</span></div>
-            </div>
-            <div class="nutrition-bar animate-section" data-target="21" data-max="50" data-unit="g">
-                <div class="bar-label">
-                    <span>Proteine</span>
-                    <span class="bar-value">0 g</span>
-                </div>
-                <div class="bar-track">
-                    <div class="bar-fill"></div>
-                </div>
-                <div class="bar-ar"><span class="animate-number" data-target="42.0" data-suffix="%">0%</span></div>
-            </div>
-            <div class="nutrition-bar animate-section" data-target="0.11" data-max="6" data-unit="g">
-                <div class="bar-label">
-                    <span>Sale</span>
-                    <span class="bar-value">0 g</span>
-                </div>
-                <div class="bar-track">
-                    <div class="bar-fill"></div>
-                </div>
-                <div class="bar-ar"><span class="animate-number" data-target="1.8" data-suffix="%">0%</span></div>
-            </div>
-        </div>
+            <table class="nutrition-table">
+                <tr>
+                    <th>Valore</th>
+                    <th>Quantità (per 100g)</th>
+                    <th>AR*</th>
+                </tr>
+                <tr>
+                    <td>Energia</td>
+                    <td>1854 kJ / 447 kcal</td>
+                    <td>22,1%</td>
+                </tr>
+                <tr>
+                    <td>Grassi</td>
+                    <td>29 g</td>
+                    <td>41,4%</td>
+                </tr>
+                <tr>
+                    <td>di cui saturi</td>
+                    <td>4,1 g</td>
+                    <td>20,5%</td>
+                </tr>
+                <tr>
+                    <td>Carboidrati</td>
+                    <td>38 g</td>
+                    <td>14,6%</td>
+                </tr>
+                <tr>
+                    <td>di cui zuccheri</td>
+                    <td>1,4 g</td>
+                    <td>1,6%</td>
+                </tr>
+                <tr>
+                    <td>di cui polioli</td>
+                    <td>36 g</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>Fibre</td>
+                    <td>3,8 g</td>
+                    <td>—</td>
+                </tr>
+                <tr>
+                    <td>Proteine</td>
+                    <td>21 g</td>
+                    <td>42,0%</td>
+                </tr>
+                <tr>
+                    <td>Sale</td>
+                    <td>0,11 g</td>
+                    <td>1,8%</td>
+                </tr>
+            </table>
             <p class="nutrition-note">* Assunzioni di riferimento di un adulto medio (8400kJ/2000kcal)</p>
-        </div>
-    </section>
-
-    <!-- Ingredienti e Allergeni -->
-    <section class="info-section">
-        <div class="info-grid">
-            <div class="info-card">
-                <h3>🌿 Ingredienti</h3>
-                <p>Edulcorante: <strong>maltitolo</strong>, olio di semi di girasole, MPC proteine del latte, cacao 10/12, cacao, emulsionante: lecitina di soia.</p>
-            </div>
-            <div class="info-card">
-                <h3>⚠️ Allergeni</h3>
-                <p><strong>Contiene latte e prodotti a base di latte, soia e prodotti a base di soia.</strong> Può contenere tracce di arachidi e prodotti a base di arachidi, frutta a guscio.</p>
-                <p style="margin-top: 15px; color: var(--accent); font-weight: 700;">⚠️ Avviso: un consumo eccessivo può avere effetti lassativi.</p>
-            </div>
         </div>
     </section>
 
