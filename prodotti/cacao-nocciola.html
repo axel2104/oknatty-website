@@ -716,7 +716,54 @@
             margin-bottom: 8px;
             display: block;
         }
-    </style>
+    
+        /* Barre nutrizionali animate */
+        .nutrition-bar {
+            width: 100%;
+            margin: 8px 0;
+        }
+        
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .bar-track {
+            width: 100%;
+            height: 12px;
+            background: var(--cream);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+        }
+        
+        .bar-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .bar-value {
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        
+        /* Animazione numeri */
+        .animate-number {
+            display: inline-block;
+        }
+        
+        .animate-section {
+            opacity: 1;
+        }
+</style>
 </head>
 <body>
     <!-- Navbar -->
@@ -746,7 +793,7 @@
 
                 <div class="product-weight-box">
                     <span class="weight-label">Formato</span>
-                    <span class="weight-value">250g</span>
+                    <span class="weight-value"><span class="animate-number" data-target="250" data-suffix="g">0</span>g</span>
                 </div>
 
                 <div class="product-stats">
@@ -773,7 +820,7 @@
                         <button class="qty-btn" onclick="updateQty(1)">+</button>
                     </div>
                     <span class="price-tag">€9,90</span>
-                    <span class="price-note">250g</span>
+                    <span class="price-note"><span class="animate-number" data-target="250" data-suffix="g">0</span>g</span>
                     <a href="#" class="product-cta" onclick="event.preventDefault(); addToCart('cacao-nocciola', parseInt(document.getElementById('qty-input').value) || 1)">
                         Acquista Ora 🛒
                     </a>
@@ -833,7 +880,7 @@
         <div class="info-grid">
             <div class="info-card">
                 <h3>🍽️ Come Usarlo</h3>
-                <p>Colazione, snack, crepes. Perfetto da spalmare su pane, crackers, frutta, o da aggiungere a smoothie e dolci. Una porzione consigliata e di 30g.</p>
+                <p>Colazione, snack, crepes. Perfetto da spalmare su pane, crackers, frutta, o da aggiungere a smoothie e dolci. Una porzione consigliata e di <span class="animate-number" data-target="30" data-suffix="g">0</span>g.</p>
             </div>
             <div class="info-card">
                 <h3>👅 Gusto</h3>
@@ -853,41 +900,99 @@
     <!-- Nutrition Section -->
     <section class="nutrition-section">
         <div class="nutrition-content">
-            <h2 class="nutrition-title">Valori Nutrizionali (per 100g)</h2>
-            <table class="nutrition-table">
-                <tr>
-                    <th>Valore</th>
-                    <th>Quantita</th>
-                </tr>
-                <tr>
-                    <td>Energia</td>
-                    <td>~450 kcal / 1880 kJ</td>
-                </tr>
-                <tr>
-                    <td>Grassi</td>
-                    <td>~28g</td>
-                </tr>
-                <tr>
-                    <td>di cui saturi</td>
-                    <td>~6g</td>
-                </tr>
-                <tr>
-                    <td>Carboidrati</td>
-                    <td>~25g</td>
-                </tr>
-                <tr>
-                    <td>di cui zuccheri</td>
-                    <td>~3g</td>
-                </tr>
-                <tr>
-                    <td>Proteine</td>
-                    <td>22%</td>
-                </tr>
-                <tr>
-                    <td>Sale</td>
-                    <td>~0.3g</td>
-                </tr>
-            </table>
+            <h2 class="nutrition-title">Valori Nutrizionali (per <span class="animate-number" data-target="100" data-suffix="g">0</span>g)</h2>
+            <div class="nutrition-bars-container">
+            <div class="nutrition-bar animate-section" data-target="447" data-max="2000" data-unit="kcal">
+                <div class="bar-label">
+                    <span>Energia</span>
+                    <span class="bar-value">0 kcal</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="22.1" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="29" data-max="70" data-unit="g">
+                <div class="bar-label">
+                    <span>Grassi</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="41.4" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="4.1" data-max="20" data-unit="g">
+                <div class="bar-label">
+                    <span>Saturi</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="20.5" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="38" data-max="260" data-unit="g">
+                <div class="bar-label">
+                    <span>Carboidrati</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="14.6" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="1.4" data-max="90" data-unit="g">
+                <div class="bar-label">
+                    <span>Zuccheri</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="1.6" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="36" data-max="50" data-unit="g">
+                <div class="bar-label">
+                    <span>Polioli</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="0" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="3.8" data-max="30" data-unit="g">
+                <div class="bar-label">
+                    <span>Fibre</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="0" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="22" data-max="50" data-unit="g">
+                <div class="bar-label">
+                    <span>Proteine</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="44.0" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="0.11" data-max="6" data-unit="g">
+                <div class="bar-label">
+                    <span>Sale</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="1.8" data-suffix="%">0%</span></div>
+            </div>
+        </div>
             <p style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--dark-brown);">
                 I valori possono variare leggermente in base al gusto specifico. Consulta sempre l'etichetta del prodotto.
             </p>
@@ -1021,5 +1126,6 @@
         }
     </script>
     <script src="../js/shopify-cart.js"></script>
+    <script src="../js/animations.js"></script>
 </body>
 </html>

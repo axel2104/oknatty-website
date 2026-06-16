@@ -800,7 +800,54 @@
             background: var(--brown);
             transform: scale(1.2);
         }
-    </style>
+    
+        /* Barre nutrizionali animate */
+        .nutrition-bar {
+            width: 100%;
+            margin: 8px 0;
+        }
+        
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .bar-track {
+            width: 100%;
+            height: 12px;
+            background: var(--cream);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+        }
+        
+        .bar-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .bar-value {
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        
+        /* Animazione numeri */
+        .animate-number {
+            display: inline-block;
+        }
+        
+        .animate-section {
+            opacity: 1;
+        }
+</style>
 </head>
 <body>
     <!-- Navbar -->
@@ -824,14 +871,14 @@
     <section class="product-hero">
         <div class="product-hero-content">
             <div class="product-info">
-                <span class="product-badge">🥜 30% Proteine</span>
+                <span class="product-badge">🥜 <span class="animate-number" data-target="30" data-suffix="%">0%</span> Proteine</span>
                 <h1 class="product-title">Burro d'Arachidi</h1>
                 <p class="product-subtitle">Il superfood che non ti aspetti, in due texture</p>
                 <p class="product-description">100% arachidi tostate origine Argentina. Zero zuccheri aggiunti, zero olio di palma, zero compromessi. Scegli la texture che preferisci: vellutata e setosa, o croccante con pezzetti autentici.</p>
 
                 <div class="product-weight-box">
                     <span class="weight-label">Formato</span>
-                    <span class="weight-value">400g</span>
+                    <span class="weight-value"><span class="animate-number" data-target="400" data-suffix="g">0</span>g</span>
                 </div>
 
                 <div class="product-stats">
@@ -866,7 +913,7 @@
                         <button class="qty-btn" onclick="updateQty(1)">+</button>
                     </div>
                     <span class="price-tag">€8,90</span>
-                    <span class="price-note">400g</span>
+                    <span class="price-note"><span class="animate-number" data-target="400" data-suffix="g">0</span>g</span>
                     <a href="#" class="product-cta" onclick="event.preventDefault(); addToCart('burro-arachidi', parseInt(document.getElementById('qty-input').value) || 1)">
                         Acquista Ora 🛒
                     </a>
@@ -924,7 +971,7 @@
         <h2 class="section-title">Perché è Funzionale</h2>
         <div class="info-grid">
             <div class="info-card">
-                <h3>💪 30% Proteine Naturali</h3>
+                <h3>💪 <span class="animate-number" data-target="30" data-suffix="%">0%</span> Proteine Naturali</h3>
                 <p>Il doppio delle proteine rispetto ai burri convenzionali. Supporto concreto per massa muscolare e recupero post-allenamento.</p>
             </div>
             <div class="info-card">
@@ -992,54 +1039,99 @@
     <!-- Nutrition Section -->
     <section class="nutrition-section">
         <div class="nutrition-content">
-            <h2 class="nutrition-title">Valori Nutrizionali (per 100g)</h2>
-            <table class="nutrition-table">
-                <tr>
-                    <th>Valore</th>
-                    <th>Quantità</th>
-                    <th>AR*</th>
-                </tr>
-                <tr>
-                    <td>Energia</td>
-                    <td>2569 kJ / 620 kcal</td>
-                    <td>30,6%</td>
-                </tr>
-                <tr>
-                    <td>Grassi</td>
-                    <td>50 g</td>
-                    <td>71,4%</td>
-                </tr>
-                <tr>
-                    <td>di cui saturi</td>
-                    <td>7,4 g</td>
-                    <td>37,0%</td>
-                </tr>
-                <tr>
-                    <td>Carboidrati</td>
-                    <td>9,0 g</td>
-                    <td>3,5%</td>
-                </tr>
-                <tr>
-                    <td>di cui zuccheri</td>
-                    <td>5,7 g</td>
-                    <td>6,3%</td>
-                </tr>
-                <tr>
-                    <td>Fibre</td>
-                    <td>7,0 g</td>
-                    <td>—</td>
-                </tr>
-                <tr>
-                    <td>Proteine</td>
-                    <td>30 g</td>
-                    <td>60,0%</td>
-                </tr>
-                <tr>
-                    <td>Sale</td>
-                    <td>0,30 g</td>
-                    <td>5,0%</td>
-                </tr>
-            </table>
+            <h2 class="nutrition-title">Valori Nutrizionali (per <span class="animate-number" data-target="100" data-suffix="g">0</span>g)</h2>
+            <div class="nutrition-bars-container">
+            <div class="nutrition-bar animate-section" data-target="447" data-max="2000" data-unit="kcal">
+                <div class="bar-label">
+                    <span>Energia</span>
+                    <span class="bar-value">0 kcal</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="22.1" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="29" data-max="70" data-unit="g">
+                <div class="bar-label">
+                    <span>Grassi</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="41.4" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="4.1" data-max="20" data-unit="g">
+                <div class="bar-label">
+                    <span>Saturi</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="20.5" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="38" data-max="260" data-unit="g">
+                <div class="bar-label">
+                    <span>Carboidrati</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="14.6" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="1.4" data-max="90" data-unit="g">
+                <div class="bar-label">
+                    <span>Zuccheri</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="1.6" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="36" data-max="50" data-unit="g">
+                <div class="bar-label">
+                    <span>Polioli</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="0" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="3.8" data-max="30" data-unit="g">
+                <div class="bar-label">
+                    <span>Fibre</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="0" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="30" data-max="50" data-unit="g">
+                <div class="bar-label">
+                    <span>Proteine</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="60.0" data-suffix="%">0%</span></div>
+            </div>
+            <div class="nutrition-bar animate-section" data-target="0.11" data-max="6" data-unit="g">
+                <div class="bar-label">
+                    <span>Sale</span>
+                    <span class="bar-value">0 g</span>
+                </div>
+                <div class="bar-track">
+                    <div class="bar-fill"></div>
+                </div>
+                <div class="bar-ar">AR: <span class="animate-number" data-target="1.8" data-suffix="%">0%</span></div>
+            </div>
+        </div>
             <p class="nutrition-note">* Assunzioni di riferimento di un adulto medio (8400kJ/2000kcal)</p>
         </div>
     </section>
@@ -1062,7 +1154,7 @@
     <section class="details-section">
         <h2 class="section-title" style="margin-bottom: 20px;">Dettagli Prodotto</h2>
         <ul class="details-list">
-            <li><strong>Peso netto:</strong> 400g</li>
+            <li><strong>Peso netto:</strong> <span class="animate-number" data-target="400" data-suffix="g">0</span>g</li>
             <li><strong>Prezzo:</strong> €8,90</li>
             <li><strong>Scadenza:</strong> 18 mesi dalla produzione</li>
             <li><strong>Conservazione:</strong> Luogo fresco e asciutto</li>
@@ -1180,5 +1272,6 @@
         }
     </script>
     <script src="../js/shopify-cart.js"></script>
+    <script src="../js/animations.js"></script>
 </body>
 </html>
