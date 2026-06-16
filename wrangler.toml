@@ -1,11 +1,9 @@
+# Cloudflare Pages configuration
+# This site is deployed via Cloudflare Pages, not Workers
 name = "oknatty-website"
 compatibility_date = "2026-06-13"
 
 [observability]
 enabled = true
 
-[site]
-bucket = "."
-exclude = ["node_modules", ".git", "package*.json", "tsconfig.json", "next.config.ts", "postcss.config.mjs", "eslint.config.mjs", "README.md", "CLAUDE.md", "AGENTS.md", "*.txt", "*.csv", "MOCKUP", "backup_html", "OKNATTY_etichette", "src", "public", "webp", "dist", "immagini_*.txt"]
-
-compatibility_flags = ["nodejs_compat"]
+# No deploy command - Pages handles deployment automatically
