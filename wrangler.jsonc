@@ -6,8 +6,7 @@
     "enabled": true
   },
   "assets": {
-    "directory": ".",
-    "exclude": ["node_modules", ".git", "package*.json", "tsconfig.json", "next.config.ts", "postcss.config.mjs", "eslint.config.mjs", "README.md", "CLAUDE.md", "AGENTS.md", "*.txt", "*.csv", "MOCKUP", "backup_html", "OKNATTY_etichette", "src", "public", "webp"]
+    "directory": "dist"
   },
   "compatibility_flags": [
     "nodejs_compat"

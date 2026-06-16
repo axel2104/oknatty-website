@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKNATTY - Creme Spalmabili Proteiche | Il Gusto che Ti Fa Bene</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F5E6C8;
+            --beige: #E8D5B5;
+            --brown: #5C3D2E;
+            --dark-brown: #3D2618;
+            --chocolate: #7B4B2A;
+            --accent: #D4A574;
+            --white: #FFFDF7;
+            --green: #6B8E4E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-image: url('white-paper-texture.webp');
+            background-repeat: repeat;
+            background-size: 500px;
+            background-attachment: fixed;
+            color: var(--dark-brown);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* Promo Banner */
+        .promo-banner {
+            width: 100%;
+            background: var(--brown);
+            color: var(--white);
+            padding: 12px 0;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1001;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .promo-banner a {
+            color: var(--cream);
+            text-decoration: underline;
+            font-weight: 700;
+        }
+
+        .promo-banner .promo-close {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            z-index: 10;
+        }
+
+        .promo-banner .promo-close:hover {
+            opacity: 1;
+        }
+
+        .promo-track {
+            display: inline-flex;
+            animation: marquee 20s linear infinite;
+            padding-left: 100%;
+        }
+
+        .promo-track:hover {
+            animation-play-state: paused;
+        }
+
+        .promo-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 60px;
+            white-space: nowrap;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+
+        /* Hero Promo Slider */
+        .hero-promo-slider {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            background: var(--dark-brown);
+        }
+
+        .hero-promo-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-promo-slide.active {
+            opacity: 1;
+        }
+
+        .hero-promo-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-promo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 60px 5% 40px;
+            background: linear-gradient(transparent, rgba(61, 38, 24, 0.9));
+            color: var(--white);
+        }
+
+        .hero-promo-overlay h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-promo-overlay p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+
+        .hero-promo-btn {
+            display: inline-block;
+            background: var(--cream);
+            color: var(--dark-brown);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s;
+            border: 3px solid var(--cream);
+        }
+
+        .hero-promo-btn:hover {
+            background: transparent;
+            color: var(--cream);
+        }
+
+        .hero-promo-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 253, 247, 0.9);
+            border: 3px solid var(--brown);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 10;
+            color: var(--brown);
+        }
+
+        .hero-promo-nav:hover {
+            background: var(--brown);
+            color: var(--white);
+        }
+
+        .hero-promo-prev {
+            left: 20px;
+        }
+
+        .hero-promo-next {
+            right: 20px;
+        }
+
+        .hero-promo-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .hero-promo-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 253, 247, 0.5);
+            border: 2px solid var(--white);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .hero-promo-dot.active {
+            background: var(--cream);
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .hero-promo-slider {
+                height: 350px;
+            }
+            .hero-promo-overlay h2 {
+                font-size: 1.6rem;
+            }
+            .hero-promo-overlay p {
+                font-size: 0.9rem;
+            }
+        }
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 253, 247, 0.85);
+            backdrop-filter: blur(8px);
+            border-bottom: 2px solid var(--cream);
+        }
+
+        .navbar .logo {
+            height: 50px;
+        }
+
+        .navbar .logo img {
+            height: 100%;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--brown);
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .nav-links a:hover {
+            color: var(--chocolate);
+        }
+
+        .nav-cta {
+            background: var(--brown);
+            color: var(--white) !important;
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: all 0.3s !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--chocolate) !important;
+            transform: translateY(-2px);
+        }
+
+        .cart-link {
+            position: relative;
+            font-size: 1.2rem !important;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--brown);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--brown);
+        }
+
+        /* Hero Section - Nuovo con contenuto Chi Siamo */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 5% 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            right: -5%;
+            width: 600px;
+            height: 600px;
+            background: url('logo_compressed.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.08;
+            transform: rotate(-15deg);
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+            z-index: 2;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--white);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--chocolate);
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(92, 61, 46, 0.1);
+        }
+
+        .hero-badge img {
+            height: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            color: var(--dark-brown);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: var(--chocolate);
+            position: relative;
+        }
+
+        .hero h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background: var(--accent);
+            opacity: 0.4;
+            border-radius: 10px;
+            z-index: -1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--brown);
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--brown);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn-primary {
+            background: var(--brown);
+            color: var(--white);
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Fredoka', sans-serif;
+            box-shadow: 0 8px 25px rgba(92, 61, 46, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--chocolate);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(92, 61, 46, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--brown);
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 3px solid var(--brown);
+            cursor: pointer;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .btn-secondary:hover {
+            background: var(--brown);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            filter: drop-shadow(0 30px 60px rgba(92, 61, 46, 0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Ecosystem Bar */
+        .ecosystem-bar {
+            background: var(--dark-brown);
+            padding: 50px 5%;
+            text-align: center;
+        }
+
+        .ecosystem-bar h3 {
+            color: var(--cream);
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .ecosystem-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .eco-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.1);
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: var(--white);
+            font-weight: 700;
+            font-family: 'Fredoka', sans-serif;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .eco-item:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .eco-item .icon {
+            font-size: 1.5rem;
+        }
+
+        /* Features Bar */
+        .features-bar {
+            background: var(--white);
+            padding: 40px 5%;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            border-bottom: 3px solid var(--cream);
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-brown);
+        }
+
+        .feature-item img {
+            height: 35px;
+        }
+
+        .feature-item span {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        /* Mission Section */
+        .mission-section {
+            padding: 100px 5%;
+        }
+
+        .mission-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .mission-content h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--dark-brown);
+            margin-bottom: 20px;
+        }
+
+        .mission-content .divider {
+            width: 80px;
+            height: 4px;
+            background: var(--brown);
+            margin: 0 auto 40px;
+            border-radius: 2px;
+        }
+
+        .mission-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--brown);
+            max-width: 900px;
+            margin: 0 auto 50px;
+        }
+
+        .mission-text strong {
+            color: var(--dark-brown);
+        }
+
+        .mission-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .mission-stat {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            border: 3px solid var(--brown);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .mission-stat:hover {
+            transform: translateY(-5px);
+        }
+
+        .mission-stat .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .mission-stat h4 {
+            font-size: 1.1rem;
+            color: var(--brown);
+            margin-bottom: 10px;
+        }
+
+        .mission-stat p {
+            font-size: 0.95rem;
+            color: var(--dark-brown);
+            line-height: 1.5;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 100px 5%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            color: var(--dark-brown);
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--brown);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: rgba(245, 230, 200, 0.7);
+            border-radius: 30px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 25px 50px rgba(92, 61, 46, 0.15);
+        }
+
+        .product-card img {
+            width: 80%;
+            max-width: 250px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 15px 30px rgba(92, 61, 46, 0.2));
+            transition: transform 0.4s;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05) rotate(-3deg);
+        }
+
+        .product-card h3 {
+            font-size: 1.5rem;
+            color: var(--dark-brown);
+            margin-bottom: 10px;
+        }
+
+        .product-card .protein-badge {
+            display: inline-block;
+            background: var(--brown);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .product-card p {
+            color: var(--brown);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Values Section */
+        .values-section {
+            padding: 100px 5%;
+        }
+
+        .values-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .values-content .section-header {
+            margin-bottom: 60px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .value-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 25px;
+            border: 4px solid var(--brown);
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            transition: transform 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .value-card .icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .value-card h4 {
+            font-size: 1.3rem;
+            color: var(--brown);
+            margin-bottom: 10px;
+        }
+
+        .value-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--dark-brown);
+        }
+
+        /* Vision CTA Section */
+        .vision-cta {
+            padding: 120px 5%;
+            background: var(--dark-brown);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vision-cta::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: url('logo_compressed.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.05;
+            transform: rotate(15deg);
+        }
+
+        .vision-cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--white);
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .vision-cta p {
+            font-size: 1.2rem;
+            color: var(--cream);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .vision-cta .btn-primary {
+            background: var(--cream);
+            color: var(--dark-brown);
+            position: relative;
+            z-index: 2;
+        }
+
+        .vision-cta .btn-primary:hover {
+            background: var(--white);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-brown);
+            color: var(--cream);
+            padding: 60px 5% 30px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-brand img {
+            height: 60px;
+            margin-bottom: 15px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-brand p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            color: var(--cream);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-col a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(245,230,200,0.2);
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text {
+                max-width: 100%;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .hero-image img {
+                max-width: 300px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .mission-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .mission-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .value-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+        }
+
+        /* Hero Carousel */
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            max-width: 550px;
+        }
+
+        .hero-carousel-track {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 2rem;
+            border: 4px solid var(--brown);
+            background: var(--white);
+            box-shadow: 0 20px 60px rgba(92, 61, 46, 0.25);
+        }
+
+        .hero-carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .hero-carousel-slide.active {
+            opacity: 1;
+        }
+
+        .hero-carousel-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 30px rgba(92, 61, 46, 0.2));
+        }
+
+        .hero-carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(92, 61, 46, 0.85);
+            color: var(--white);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .hero-carousel-nav:hover {
+            background: var(--brown);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .hero-carousel-prev {
+            left: -22px;
+        }
+
+        .hero-carousel-next {
+            right: -22px;
+        }
+
+        .hero-carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .hero-carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--cream);
+            border: 3px solid var(--brown);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .hero-carousel-dot.active {
+            background: var(--brown);
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Promo Slider -->
+    <section class="hero-promo-slider" id="heroPromoSlider">
+        <div class="hero-promo-slide active">
+            <picture>
+  <source srcset="webp/Cioccolato_Fondente_BARATTOLO_CORRETTO_hf_20260526_141818_4f934ebf-1f0c-4045-b568-d6dc44c59084.webp" type="image/webp">
+  <img src="Cioccolato_Fondente_BARATTOLO_CORRETTO_hf_20260526_141818_4f934ebf-1f0c-4045-b568-d6dc44c59084.jpg" alt="Promo Cioccolato Fondente" loading="lazy">
+</picture>
+            <div class="hero-promo-overlay">
+                <h2>🎉 Back in Stock!</h2>
+                <p>Il Cioccolato Fondente è tornato disponibile. Non lasciartelo sfuggire!</p>
+                <a href="prodotti/cioccolato-fondente.html" class="hero-promo-btn">Acquista Ora →</a>
+            </div>
+        </div>
+        <div class="hero-promo-slide">
+            <picture>
+  <source srcset="webp/Burro_Arachidi_INF_01.webp" type="image/webp">
+  <img src="Burro_Arachidi_INF_01.jpg" alt="Promo Burro d" loading="lazy">
+</picture>
+            <div class="hero-promo-overlay">
+                <h2>🆕 Nuovo Gusto!</h2>
+                <p>Scopri il Burro d'Arachidi Crunchy. 100% arachidi tostate, zero compromessi.</p>
+                <a href="prodotti/burro-arachidi.html" class="hero-promo-btn">Provalo Ora →</a>
+            </div>
+        </div>
+        <div class="hero-promo-slide">
+            <picture>
+  <source srcset="webp/Caramello_Salato_BARATTOLO_CORRETTO_hf_20260526_142146_9403bcc4-cee0-4967-9d1d-a56f9b2af53c.webp" type="image/webp">
+  <img src="Caramello_Salato_BARATTOLO_CORRETTO_hf_20260526_142146_9403bcc4-cee0-4967-9d1d-a56f9b2af53c.jpg" alt="Promo Caramello Salato" loading="lazy">
+</picture>
+            <div class="hero-promo-overlay">
+                <h2>💰 Offerta Speciale</h2>
+                <p>Spedizione gratuita per ordini superiori a €50. Approfittane ora!</p>
+                <a href="#prodotti" class="hero-promo-btn">Scopri i Gusti →</a>
+            </div>
+        </div>
+        <button class="hero-promo-nav hero-promo-prev">❮</button>
+        <button class="hero-promo-nav hero-promo-next">❯</button>
+        <div class="hero-promo-dots">
+            <div class="hero-promo-dot active" data-slide="0"></div>
+            <div class="hero-promo-dot" data-slide="1"></div>
+            <div class="hero-promo-dot" data-slide="2"></div>
+        </div>
+    </section>
+
+    <script>
+        // Hero Promo Slider
+        (function() {
+            const slides = document.querySelectorAll('.hero-promo-slide');
+            const dots = document.querySelectorAll('.hero-promo-dot');
+            const prevBtn = document.querySelector('.hero-promo-prev');
+            const nextBtn = document.querySelector('.hero-promo-next');
+            let currentSlide = 0;
+            let slideInterval;
+            const totalSlides = slides.length;
+
+            function showSlide(index) {
+                slides.forEach(s => s.classList.remove('active'));
+                dots.forEach(d => d.classList.remove('active'));
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+                currentSlide = index;
+            }
+
+            function nextSlide() {
+                showSlide((currentSlide + 1) % totalSlides);
+            }
+
+            function prevSlide() {
+                showSlide((currentSlide - 1 + totalSlides) % totalSlides);
+            }
+
+            function startAutoPlay() {
+                slideInterval = setInterval(nextSlide, 5000);
+            }
+
+            function stopAutoPlay() {
+                clearInterval(slideInterval);
+            }
+
+            prevBtn.addEventListener('click', () => {
+                stopAutoPlay();
+                prevSlide();
+                startAutoPlay();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                stopAutoPlay();
+                nextSlide();
+                startAutoPlay();
+            });
+
+            dots.forEach((dot, idx) => {
+                dot.addEventListener('click', () => {
+                    stopAutoPlay();
+                    showSlide(idx);
+                    startAutoPlay();
+                });
+            });
+
+            startAutoPlay();
+        })();
+    </script>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="#home" class="logo">
+            <picture>
+  <source srcset="webp/logo_compressed.webp" type="image/webp">
+  <img src="logo_compressed.png" alt="OKNATTY Logo">
+</picture>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#prodotti">Prodotti</a></li>
+            <li><a href="chi-siamo.html">Chi Siamo</a></li>
+            <li><a href="#" class="cart-link" onclick="openCartDrawer(event)" title="Carrello">🛒 <span class="cart-badge" style="display:none">0</span></a></li>
+            <li><a href="#contatti" class="nav-cta">Ordina Ora</a></li>
+        </ul>
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+    </nav>
+
+    <!-- Hero Section con contenuto Chi Siamo -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    🥄 Made in Italy
+                </div>
+                <h1>Il Gusto che <span>Ti Fa Bene</span></h1>
+                <p class="hero-subtitle">Il Terzo Pilastro del Tuo Benessere</p>
+                <p>OKNATTY nasce per completare un sogno: costruire un <strong>ecosistema a 360°</strong> in cui il benessere, lo sport e l'alimentazione si incontrano senza compromessi.</p>
+                <p>Affiancando <strong>ELEMENT FOR</strong> (integratori sportivi) ed <strong>ETERNA</strong> (nutraceutica), OKNATTY rappresenta il terzo pilastro di un mondo pensato per chi non vuole scegliere tra prestazione e gusto.</p>
+                <div class="hero-buttons">
+                    <a href="#prodotti" class="btn-primary">Scopri i Gusti 🥄</a>
+                    <a href="chi-siamo.html" class="btn-secondary">La Nostra Storia</a>
+                </div>
+            </div>
+            <div class="hero-carousel">
+                <div class="hero-carousel-track">
+                    <div class="hero-carousel-slide active">
+                        <picture>
+  <source srcset="webp/Cioccolato_Fondente_BARATTOLO_CORRETTO_hf_20260526_141818_4f934ebf-1f0c-4045-b568-d6dc44c59084.webp" type="image/webp">
+  <img src="Cioccolato_Fondente_BARATTOLO_CORRETTO_hf_20260526_141818_4f934ebf-1f0c-4045-b568-d6dc44c59084.jpg" alt="OKNATTY Cioccolato Fondente" loading="lazy">
+</picture>
+                    </div>
+                    <div class="hero-carousel-slide">
+                        <picture>
+  <source srcset="webp/Cioccolato_Cocco_BARATTOLO_CORRETTO_hf_20260526_142032_148d84b2-4f3e-4345-868b-4e44ae0797b4.webp" type="image/webp">
+  <img src="Cioccolato_Cocco_BARATTOLO_CORRETTO_hf_20260526_142032_148d84b2-4f3e-4345-868b-4e44ae0797b4.jpg" alt="OKNATTY Cioccolato e Cocco" loading="lazy">
+</picture>
+                    </div>
+                    <div class="hero-carousel-slide">
+                        <picture>
+  <source srcset="webp/Caramello_Salato_BARATTOLO_CORRETTO_hf_20260526_142146_9403bcc4-cee0-4967-9d1d-a56f9b2af53c.webp" type="image/webp">
+  <img src="Caramello_Salato_BARATTOLO_CORRETTO_hf_20260526_142146_9403bcc4-cee0-4967-9d1d-a56f9b2af53c.jpg" alt="OKNATTY Caramello Salato" loading="lazy">
+</picture>
+                    </div>
+                    <div class="hero-carousel-slide">
+                        <picture>
+  <source srcset="webp/CremaCoccoBar_BARATTOLO_CORRETTO_hf_20260526_141152_4743de11-5e1f-4296-8d35-c59715c77a02 (2).webp" type="image/webp">
+  <img src="CremaCoccoBar_BARATTOLO_CORRETTO_hf_20260526_141152_4743de11-5e1f-4296-8d35-c59715c77a02 (2).jpg" alt="OKNATTY Crema Cocco Bar" loading="lazy">
+</picture>
+                    </div>
+                    <div class="hero-carousel-slide">
+                        <picture>
+  <source srcset="webp/Nocciola_BARATTOLO_CORRETTO_hf_20260526_141103_741fec2c-0451-4210-a4c6-4e356dd66093.webp" type="image/webp">
+  <img src="Nocciola_BARATTOLO_CORRETTO_hf_20260526_141103_741fec2c-0451-4210-a4c6-4e356dd66093.jpg" alt="OKNATTY Cacao e Nocciola" loading="lazy">
+</picture>
+                    </div>
+                    <div class="hero-carousel-slide">
+                        <picture>
+  <source srcset="webp/Nocciolata_Bianca_BARATTOLO_CORRETTO_hf_20260526_140454_04bfed12-6f3c-4d50-bb8b-4e5557eeb3b6.webp" type="image/webp">
+  <img src="Nocciolata_Bianca_BARATTOLO_CORRETTO_hf_20260526_140454_04bfed12-6f3c-4d50-bb8b-4e5557eeb3b6.jpg" alt="OKNATTY Nocciolata Bianca" loading="lazy">
+</picture>
+                    </div>
+                    <div class="hero-carousel-slide">
+                        <picture>
+  <source srcset="webp/Burro_Arachidi_INF_01.webp" type="image/webp">
+  <img src="Burro_Arachidi_INF_01.jpg" alt="OKNATTY Burro d" loading="lazy">
+</picture>
+                    </div>
+                    <div class="hero-carousel-slide">
+                        <picture>
+  <source srcset="webp/MOCKUP/oknattyfarinadiriso.webp" type="image/webp">
+  <img src="MOCKUP/oknattyfarinadiriso.png" alt="OKNATTY Crema di Riso" loading="lazy">
+</picture>
+                    </div>
+                </div>
+                <button class="hero-carousel-nav hero-carousel-prev">❮</button>
+                <button class="hero-carousel-nav hero-carousel-next">❯</button>
+                <div class="hero-carousel-dots">
+                    <div class="hero-carousel-dot active" data-slide="0"></div>
+                    <div class="hero-carousel-dot" data-slide="1"></div>
+                    <div class="hero-carousel-dot" data-slide="2"></div>
+                    <div class="hero-carousel-dot" data-slide="3"></div>
+                    <div class="hero-carousel-dot" data-slide="4"></div>
+                    <div class="hero-carousel-dot" data-slide="5"></div>
+                    <div class="hero-carousel-dot" data-slide="6"></div>
+                    <div class="hero-carousel-dot" data-slide="7"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem Bar -->
+    <section class="ecosystem-bar">
+        <h3>Il Nostro Ecosistema — Un Universo di Benessere</h3>
+        <div class="ecosystem-grid">
+            <a href="https://elementfor.com" target="_blank" rel="noopener" class="eco-item">
+                <span class="icon">💪</span>
+                <span>ELEMENT FOR — Integratori</span>
+            </a>
+            <a href="https://eterna.it" target="_blank" rel="noopener" class="eco-item">
+                <span class="icon">🌿</span>
+                <span>ETERNA — Nutraceutica</span>
+            </a>
+            <a href="https://oknatty.com" target="_blank" rel="noopener" class="eco-item">
+                <span class="icon">🥄</span>
+                <span>OKNATTY — Food Funzionale</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Bar -->
+    <section class="features-bar">
+        <div class="feature-item">
+            <picture>
+  <source srcset="webp/oil_compressed.webp" type="image/webp">
+  <img src="oil_compressed.png" alt="No Olio di Palma" loading="lazy">
+</picture>
+            <span>Senza Olio di Palma</span>
+        </div>
+        <div class="feature-item">
+            <picture>
+  <source srcset="webp/sugar-cubes_compressed.webp" type="image/webp">
+  <img src="sugar-cubes_compressed.png" alt="Basso Zucchero" loading="lazy">
+</picture>
+            <span>Basso Contenuto di Zucchero</span>
+        </div>
+        <div class="feature-item">
+            <picture>
+  <source srcset="webp/leaf_compressed.webp" type="image/webp">
+  <img src="leaf_compressed.png" alt="100% Naturale" loading="lazy">
+</picture>
+            <span>100% Naturale</span>
+        </div>
+        <div class="feature-item">
+            <picture>
+  <source srcset="webp/Recycling_symbol.svg" type="image/webp">
+  <img src="Recycling_symbol.svg" alt="Eco-Friendly" loading="lazy">
+</picture>
+            <span>Confezione Eco-Friendly</span>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="mission-content">
+            <h2>La Nostra Mission</h2>
+            <div class="divider"></div>
+            <p class="mission-text">
+                Crediamo che mangiare sano non debba significare rinunciare al piacere. Per questo la nostra missione è semplice e ambiziosa: <strong>accontentare il 99% degli utenti</strong> che entrano nel nostro mondo, offrendo prodotti che uniscono <strong>gusto eccezionale, qualità assoluta e trasparenza totale</strong>.
+            </p>
+            <div class="mission-stats">
+                <div class="mission-stat">
+                    <div class="icon">🇮🇹</div>
+                    <h4>Made in Italy</h4>
+                    <p>Produzione artigianale italiana con materie prime selezionate</p>
+                </div>
+                <div class="mission-stat">
+                    <div class="icon">🌱</div>
+                    <h4>100% Naturale</h4>
+                    <p>Nessun additivo, nessun conservante artificiale</p>
+                </div>
+                <div class="mission-stat">
+                    <div class="icon">♻️</div>
+                    <h4>Vetro Riciclabile</h4>
+                    <p>Confezioni in vetro per preservare freschezza e sostenibilità</p>
+                </div>
+                <div class="mission-stat">
+                    <div class="icon">🚫</div>
+                    <h4>No Compromessi</h4>
+                    <p>Senza olio di palma, zuccheri aggiunti né additivi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="prodotti">
+        <div class="section-header">
+            <h2>I Nostri Gusti</h2>
+            <p>8 deliziose varianti per soddisfare ogni palato, tutte con un alto contenuto proteico e ingredienti selezionati.</p>
+        </div>
+        <div class="products-grid">
+            <a href="prodotti/cioccolato-fondente.html" class="product-card fade-in">
+                <picture>
+  <source srcset="webp/Cioccolato_Fondente_BARATTOLO_CORRETTO_hf_20260526_141818_4f934ebf-1f0c-4045-b568-d6dc44c59084.webp" type="image/webp">
+  <img src="Cioccolato_Fondente_BARATTOLO_CORRETTO_hf_20260526_141818_4f934ebf-1f0c-4045-b568-d6dc44c59084.jpg" alt="Cioccolato Fondente" loading="lazy">
+</picture>
+                <h3>Cioccolato Fondente</h3>
+                <span class="protein-badge">21% Proteine</span>
+                <p>Il classico intramontabile. Cioccolato fondente intenso e cremoso per un momento di puro piacere.</p>
+            </a>
+            <a href="prodotti/cioccolato-cocco.html" class="product-card fade-in">
+                <picture>
+  <source srcset="webp/Cioccolato_Cocco_BARATTOLO_CORRETTO_hf_20260526_142032_148d84b2-4f3e-4345-868b-4e44ae0797b4.webp" type="image/webp">
+  <img src="Cioccolato_Cocco_BARATTOLO_CORRETTO_hf_20260526_142032_148d84b2-4f3e-4345-868b-4e44ae0797b4.jpg" alt="Cioccolato e Cocco" loading="lazy">
+</picture>
+                <h3>Cioccolato e Cocco</h3>
+                <span class="protein-badge">21% Proteine</span>
+                <p>L'abbinamento tropicale che conquista. Cocco cremoso incontra il cioccolato per un'esplosione di sapore.</p>
+            </a>
+            <a href="prodotti/caramello-salato.html" class="product-card fade-in">
+                <picture>
+  <source srcset="webp/Caramello_Salato_BARATTOLO_CORRETTO_hf_20260526_142146_9403bcc4-cee0-4967-9d1d-a56f9b2af53c.webp" type="image/webp">
+  <img src="Caramello_Salato_BARATTOLO_CORRETTO_hf_20260526_142146_9403bcc4-cee0-4967-9d1d-a56f9b2af53c.jpg" alt="Caramello Salato" loading="lazy">
+</picture>
+                <h3>Caramello Salato</h3>
+                <span class="protein-badge">21% Proteine</span>
+                <p>Dolce e salato in perfetta armonia. Il contrasto che stuzzica il palato e soddisfa ogni voglia.</p>
+            </a>
+            <a href="prodotti/nocciolata-bianca.html" class="product-card fade-in">
+                <picture>
+  <source srcset="webp/Nocciolata_Bianca_BARATTOLO_CORRETTO_hf_20260526_140454_04bfed12-6f3c-4d50-bb8b-4e5557eeb3b6.webp" type="image/webp">
+  <img src="Nocciolata_Bianca_BARATTOLO_CORRETTO_hf_20260526_140454_04bfed12-6f3c-4d50-bb8b-4e5557eeb3b6.jpg" alt="Crema Nocciola Bianca" loading="lazy">
+</picture>
+                <h3>Crema Nocciola Bianca</h3>
+                <span class="protein-badge">21% Proteine</span>
+                <p>Nocciola tostata avvolta in una crema bianca vellutata. Un'eleganza di sapore tutta da scoprire.</p>
+            </a>
+            <a href="prodotti/cacao-nocciola.html" class="product-card fade-in">
+                <picture>
+  <source srcset="webp/Nocciola_BARATTOLO_CORRETTO_hf_20260526_141103_741fec2c-0451-4210-a4c6-4e356dd66093.webp" type="image/webp">
+  <img src="Nocciola_BARATTOLO_CORRETTO_hf_20260526_141103_741fec2c-0451-4210-a4c6-4e356dd66093.jpg" alt="Cacao e Nocciola" loading="lazy">
+</picture>
+                <h3>Cacao e Nocciola</h3>
+                <span class="protein-badge">22% Proteine</span>
+                <p>Il matrimonio perfetto tra cacao ricco e nocciola croccante. Una vera delizia per gli amanti del fitness.</p>
+            </a>
+            <a href="prodotti/crema-cocco-bar.html" class="product-card fade-in">
+                <picture>
+  <source srcset="webp/CremaCoccoBar_BARATTOLO_CORRETTO_hf_20260526_141152_4743de11-5e1f-4296-8d35-c59715c77a02 (2).webp" type="image/webp">
+  <img src="CremaCoccoBar_BARATTOLO_CORRETTO_hf_20260526_141152_4743de11-5e1f-4296-8d35-c59715c77a02 (2).jpg" alt="Crema Cocco Bar" loading="lazy">
+</picture>
+                <h3>Crema Cocco Bar</h3>
+                <span class="protein-badge">21% Proteine</span>
+                <p>Un'esplosione tropicale di gusto. Cocco cremoso per un momento di puro piacere esotico.</p>
+            </a>
+            <a href="prodotti/burro-arachidi.html" class="product-card fade-in">
+                <picture>
+  <source srcset="webp/Burro_Arachidi_INF_01.webp" type="image/webp">
+  <img src="Burro_Arachidi_INF_01.jpg" alt="Burro d" loading="lazy">
+</picture>
+                <h3>Burro d'Arachidi</h3>
+                <span class="protein-badge">30% Proteine</span>
+                <p>100% arachidi tostate origine Argentina. Scegli la tua texture: Smooth o Crunchy.</p>
+            </a>
+            <a href="prodotti/crema-di-riso.html" class="product-card fade-in">
+                <picture>
+  <source srcset="webp/MOCKUP/oknattyfarinadiriso.webp" type="image/webp">
+  <img src="MOCKUP/oknattyfarinadiriso.png" alt="Crema di Riso" loading="lazy">
+</picture>
+                <h3>Crema di Riso</h3>
+                <span class="protein-badge">7% Proteine</span>
+                <p>100% vegetale, senza glutine. Riso bianco precotto italiano per una colazione leggera.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="values-content">
+            <div class="section-header">
+                <h2>I Nostri Valori</h2>
+                <p>Ciò che ci guida ogni giorno nella creazione dei nostri prodotti</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="icon">🇮🇹</div>
+                    <div>
+                        <h4>Made in Italy</h4>
+                        <p>Tutti i nostri prodotti sono realizzati in Italia con materie prime selezionate e processi artigianali che garantiscono la massima qualità.</p>
+                    </div>
+                </div>
+                <div class="value-card">
+                    <div class="icon">🌱</div>
+                    <div>
+                        <h4>100% Naturale</h4>
+                        <p>Nessun additivo, nessun conservante artificiale. Solo ingredienti veri che puoi pronunciare e riconoscere.</p>
+                    </div>
+                </div>
+                <div class="value-card">
+                    <div class="icon">♻️</div>
+                    <div>
+                        <h4>Sostenibilità</h4>
+                        <p>Confezioni in vetro riciclabile, niente plastica. Per un pianeta che possiamo lasciare in eredità alle future generazioni.</p>
+                    </div>
+                </div>
+                <div class="value-card">
+                    <div class="icon">🔍</div>
+                    <div>
+                        <h4>Trasparenza</h4>
+                        <p>Ti diciamo esattamente cosa mangi. Etichette chiare, ingredienti tracciabili, nessun segreto.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision CTA Section -->
+    <section class="vision-cta" id="contatti">
+        <h2>OKNATTY non è solo un brand.</h2>
+        <p>È il modo in cui il benessere diventa sostenibile, gustoso e finalmente completo. Immaginiamo un futuro in cui non esistono più barriere tra nutrizione, benessere e felicità.</p>
+        <a href="mailto:info@oknatty.com" class="btn-primary">Ordina Ora 🚀</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <picture>
+  <source srcset="webp/logo_compressed.webp" type="image/webp">
+  <img src="logo_compressed.png" alt="OKNATTY">
+</picture>
+                <p>OKNATTY - Creme spalmabili proteiche che uniscono gusto e benessere. Il tuo alleato per una colazione, uno snack o un post-workout perfetto.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Prodotti</h4>
+                <ul>
+                    <li><a href="prodotti/cioccolato-fondente.html">Cioccolato Fondente</a></li>
+                    <li><a href="prodotti/cioccolato-cocco.html">Cioccolato e Cocco</a></li>
+                    <li><a href="prodotti/caramello-salato.html">Caramello Salato</a></li>
+                    <li><a href="prodotti/nocciolata-bianca.html">Crema Nocciola Bianca</a></li>
+                    <li><a href="prodotti/cacao-nocciola.html">Cacao e Nocciola</a></li>
+                    <li><a href="prodotti/crema-cocco-bar.html">Burro d'Arachidi</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>OKNATTY</h4>
+                <ul>
+                    <li><a href="chi-siamo.html">Chi Siamo</a></li>
+                    <li><a href="#">Ingredienti</a></li>
+                    <li><a href="#">Valori Nutrizionali</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contatti</h4>
+                <ul>
+                    <li><a href="mailto:info@oknatty.com">info@oknatty.com</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">TikTok</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 OKNATTY. Tutti i diritti riservati. | Made with ❤️ in Italy</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+
+    <script>
+        // Hero Carousel
+        const heroSlides = document.querySelectorAll('.hero-carousel-slide');
+        const heroDots = document.querySelectorAll('.hero-carousel-dot');
+        let currentHeroSlide = 0;
+        const totalHeroSlides = heroSlides.length;
+        let heroAutoPlay;
+
+        function showHeroSlide(index) {
+            heroSlides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            heroDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            currentHeroSlide = index;
+        }
+
+        function nextHeroSlide() {
+            showHeroSlide((currentHeroSlide + 1) % totalHeroSlides);
+        }
+
+        function prevHeroSlide() {
+            showHeroSlide((currentHeroSlide - 1 + totalHeroSlides) % totalHeroSlides);
+        }
+
+        function startHeroAutoPlay() {
+            heroAutoPlay = setInterval(nextHeroSlide, 4000);
+        }
+
+        function stopHeroAutoPlay() {
+            clearInterval(heroAutoPlay);
+        }
+
+        document.querySelector('.hero-carousel-next').addEventListener('click', () => {
+            stopHeroAutoPlay();
+            nextHeroSlide();
+            startHeroAutoPlay();
+        });
+
+        document.querySelector('.hero-carousel-prev').addEventListener('click', () => {
+            stopHeroAutoPlay();
+            prevHeroSlide();
+            startHeroAutoPlay();
+        });
+
+        heroDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                stopHeroAutoPlay();
+                showHeroSlide(index);
+                startHeroAutoPlay();
+            });
+        });
+
+        document.querySelector('.hero-carousel-track').addEventListener('mouseenter', stopHeroAutoPlay);
+        document.querySelector('.hero-carousel-track').addEventListener('mouseleave', startHeroAutoPlay);
+
+        startHeroAutoPlay();
+    </script>
+    <script src="js/shopify-cart.js"></script>
+</body>
+</html>
