@@ -1,11 +1,11 @@
 name = "oknatty-website"
-compatibility_date = "2026-06-15"
+compatibility_date = "2026-06-13"
 
-[build]
-command = "npm run build"
+[observability]
+enabled = true
 
-[assets]
-directory = "./out"
+[site]
+bucket = "."
+exclude = ["node_modules", ".git", "package*.json", "tsconfig.json", "next.config.ts", "postcss.config.mjs", "eslint.config.mjs", "README.md", "CLAUDE.md", "AGENTS.md", "*.txt", "*.csv", "MOCKUP", "backup_html", "OKNATTY_etichette", "src", "public", "webp", "dist", "immagini_*.txt"]
 
-[[env.production]]
-name = "oknatty-website"
+compatibility_flags = ["nodejs_compat"]
