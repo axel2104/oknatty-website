@@ -50,3 +50,10 @@ public-backup-original/
 
 # Escludi cartella etichette
 OKNATTY_etichette/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
