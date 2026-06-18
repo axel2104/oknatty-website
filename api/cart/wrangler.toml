@@ -1,0 +1,11 @@
+name = "oknatty-cart-api"
+main = "api/cart/index.js"
+compatibility_date = "2026-06-18"
+
+[[durable_objects.bindings]]
+name = "CART_DURABLE_OBJECT"
+class_name = "CartDurableObject"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["CartDurableObject"]

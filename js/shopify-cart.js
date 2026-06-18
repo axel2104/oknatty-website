@@ -1,91 +1,123 @@
-// OKNATTY Shopify Storefront API Integration
-// Configurazione: inserisci qui i tuoi dati Shopify
+// ============================================
+// OKNATTY + ELEMENT - Carrello Headless Client
+// Connette a API Cloudflare Workers/Durable Objects
+// ============================================
+
+const API_CONFIG = {
+    // URL dell'API carrello (da aggiornare dopo deploy)
+    baseUrl: 'https://cart.oknatty.com', // o https://cart-api.oknatty-website.workers.dev
+    // Fallback: se l'API non è disponibile, usa localStorage
+    fallbackToLocalStorage: true
+};
+
+// ============================================
+// CONFIGURAZIONE PRODOTTI
+// ============================================
 const SHOPIFY_CONFIG = {
-    domain: 'bu4ksb-yb.myshopify.com',  // Solo dominio, SENZA https://
-    storefrontToken: '5d852e4156a7c1c496174a37a01e6356', // Token dal canale Headless
-    // Mappa handle Shopify → pagine prodotto OKNATTY
-    // Gli handle sono gli slug dei prodotti su Shopify (ultima parte dell'URL)
+    domain: 'bu4ksb-yb.myshopify.com',
+    storefrontToken: '5d852e4156a7c1c496174a37a01e6356',
+    
+    // OKNATTY products
     productHandles: {
-        'cioccolato-fondente': { handle: 'cioccolato-fondente', price: 9.90, brand: 'OKNATTY' },
-        'cioccolato-cocco': { handle: 'cioccolato-cocco', price: 9.90, brand: 'OKNATTY' },
-        'caramello-salato': { handle: 'caramello-salato', price: 9.90, brand: 'OKNATTY' },
-        'crema-nocciola-bianca': { handle: 'crema-nocciola-bianca', price: 9.90, brand: 'OKNATTY' },
-        'cacao-nocciola': { handle: 'cacao-nocciola', price: 9.90, brand: 'OKNATTY' },
-        'crema-cocco-bar': { handle: 'crema-cocco-bar', price: 9.90, brand: 'OKNATTY' },
-        'burro-arachidi': { handle: 'burro-arachidi', price: 8.90, brand: 'OKNATTY' },
-        'crema-di-riso': { handle: 'crema-di-riso', price: 13.90, brand: 'OKNATTY' }
+        'cioccolato-fondente': { handle: 'cioccolato-fondente', price: 9.90, title: 'Cioccolato Fondente', brand: 'OKNATTY' },
+        'cioccolato-cocco': { handle: 'cioccolato-cocco', price: 9.90, title: 'Cioccolato e Cocco', brand: 'OKNATTY' },
+        'caramello-salato': { handle: 'caramello-salato', price: 9.90, title: 'Caramello Salato', brand: 'OKNATTY' },
+        'crema-nocciola-bianca': { handle: 'crema-nocciola-bianca', price: 9.90, title: 'Crema Nocciola Bianca', brand: 'OKNATTY' },
+        'cacao-nocciola': { handle: 'cacao-nocciola', price: 9.90, title: 'Cacao e Nocciola', brand: 'OKNATTY' },
+        'crema-cocco-bar': { handle: 'crema-cocco-bar', price: 9.90, title: 'Crema Cocco Bar', brand: 'OKNATTY' },
+        'burro-arachidi': { handle: 'burro-arachidi', price: 8.90, title: 'Burro d\'Arachidi', brand: 'OKNATTY' },
+        'crema-di-riso': { handle: 'crema-di-riso', price: 13.90, title: 'Crema di Riso', brand: 'OKNATTY' }
     },
-    // Prodotti ELEMENT consigliati nel carrello (cross-sell)
+    
+    // ELEMENT products (cross-sell)
     elementProducts: [
-        { handle: 'novapro-ultra-pure-whey', title: 'NOVAPRO ULTRA PURE WHEY', price: 29.90, subtitle: '900g' },
-        { handle: 'aminoleader-essential-aminoacid', title: 'AMINOLEADER', price: 24.90, subtitle: 'Aminoacidi Essenziali 250g' },
-        { handle: 'forge-creatina-monoidrato', title: 'FORGE CREATINA', price: 19.90, subtitle: '200 Mesh 240g' },
-        { handle: 'kagliostro-hardcore-focus-formula', title: 'KAGLIOSTRO', price: 34.90, subtitle: 'Pre-Workout 250g' },
-        { handle: 'reborn-full-recovery-formula', title: 'REBORN', price: 32.90, subtitle: 'Recovery 600g' },
-        { handle: 'journey-vit-24-h', title: 'JOURNEY VIT', price: 22.90, subtitle: 'Multivitaminico 120cps' }
+        { handle: 'novapro-ultra-pure-whey', title: 'NOVAPRO ULTRA PURE WHEY', price: 29.90, subtitle: '900g', brand: 'ELEMENT' },
+        { handle: 'aminoleader-essential-aminoacid', title: 'AMINOLEADER', price: 24.90, subtitle: 'Aminoacidi Essenziali 250g', brand: 'ELEMENT' },
+        { handle: 'forge-creatina-monoidrato', title: 'FORGE CREATINA', price: 19.90, subtitle: '200 Mesh 240g', brand: 'ELEMENT' },
+        { handle: 'kagliostro-hardcore-focus-formula', title: 'KAGLIOSTRO', price: 34.90, subtitle: 'Pre-Workout 250g', brand: 'ELEMENT' },
+        { handle: 'reborn-full-recovery-formula', title: 'REBORN', price: 32.90, subtitle: 'Recovery 600g', brand: 'ELEMENT' },
+        { handle: 'journey-vit-24-h', title: 'JOURNEY VIT', price: 22.90, subtitle: 'Multivitaminico 120cps', brand: 'ELEMENT' }
     ]
 };
 
-// GraphQL endpoint Storefront API
-const STOREFRAPHQL_URL = `https://${SHOPIFY_CONFIG.domain.replace(/^https?:\/\//, '')}/api/2024-10/graphql.json`;
+// ============================================
+// CART ID - Persistente cross-domain
+// ============================================
+const CART_ID_KEY = 'oknatty_cart_id';
+const LOCAL_CART_KEY = 'oknatty_cart_fallback';
+
+function getCartId() {
+    return localStorage.getItem(CART_ID_KEY) || null;
+}
+
+function setCartId(id) {
+    localStorage.setItem(CART_ID_KEY, id);
+}
 
 // ============================================
-// CARRELLO - localStorage
+// API CLIENT
 // ============================================
-const CART_KEY = 'oknatty_cart';
+let apiAvailable = true;
 
-function getCart() {
+async function apiCall(endpoint, method = 'GET', body = null) {
+    const cartId = getCartId();
+    const headers = {
+        'Content-Type': 'application/json'
+    };
+    if (cartId) {
+        headers['X-Cart-ID'] = cartId;
+    }
+    
     try {
-        return JSON.parse(localStorage.getItem(CART_KEY)) || { items: [], checkoutUrl: null };
+        const response = await fetch(`${API_CONFIG.baseUrl}${endpoint}`, {
+            method,
+            headers,
+            body: body ? JSON.stringify(body) : null
+        });
+        
+        // Salva nuovo cart ID se presente
+        const newCartId = response.headers.get('X-Cart-ID');
+        if (newCartId) {
+            setCartId(newCartId);
+        }
+        
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+        }
+        
+        apiAvailable = true;
+        return await response.json();
+        
+    } catch (err) {
+        console.warn('API non disponibile, uso localStorage:', err.message);
+        apiAvailable = false;
+        return null;
+    }
+}
+
+// ============================================
+// LOCALSTORAGE FALLBACK
+// ============================================
+function getLocalCart() {
+    try {
+        return JSON.parse(localStorage.getItem(LOCAL_CART_KEY)) || { items: [], checkoutUrl: null };
     } catch {
         return { items: [], checkoutUrl: null };
     }
 }
 
-function saveCart(cart) {
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+function saveLocalCart(cart) {
+    localStorage.setItem(LOCAL_CART_KEY, JSON.stringify(cart));
     updateCartBadge();
-}
-
-function clearCart() {
-    localStorage.removeItem(CART_KEY);
-    updateCartBadge();
-}
-
-// ============================================
-// BADGE CARRELLO
-// ============================================
-function updateCartBadge() {
-    const cart = getCart();
-    const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
-    
-    // Cerca o crea il badge nella navbar
-    let badge = document.querySelector('.cart-badge');
-    if (!badge) {
-        const nav = document.querySelector('.nav-links');
-        if (nav) {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <a href="#" class="cart-link" onclick="openCartDrawer(event)" title="Carrello">
-                    🛒 <span class="cart-badge">0</span>
-                </a>
-            `;
-            nav.appendChild(li);
-            badge = li.querySelector('.cart-badge');
-        }
-    }
-    
-    if (badge) {
-        badge.textContent = totalItems;
-        badge.style.display = totalItems > 0 ? 'inline-block' : 'none';
-    }
 }
 
 // ============================================
 // SHOPIFY STOREFRONT API - GraphQL
 // ============================================
+const STOREFRONT_URL = `https://${SHOPIFY_CONFIG.domain}/api/2024-10/graphql.json`;
+
 async function shopifyFetch(query, variables = {}) {
-    const response = await fetch(STOREFRAPHQL_URL, {
+    const response = await fetch(STOREFRONT_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -96,7 +128,6 @@ async function shopifyFetch(query, variables = {}) {
     return response.json();
 }
 
-// Recupera variant ID di un prodotto dallo handle
 async function getVariantIdByHandle(handle) {
     const query = `
         query getProduct($handle: String!) {
@@ -121,11 +152,136 @@ async function getVariantIdByHandle(handle) {
     return variant?.id || null;
 }
 
-// Crea un carrello Shopify con i prodotti
-async function createShopifyCart(items) {
-    // items = [{ variantId, quantity }]
-    const lines = items.map(item => ({
-        merchandiseId: item.variantId,
+// ============================================
+// CARRELLO - API + Fallback
+// ============================================
+async function getCart() {
+    if (apiAvailable) {
+        const cart = await apiCall('/cart');
+        if (cart && !cart.error) {
+            return cart;
+        }
+    }
+    return getLocalCart();
+}
+
+async function addToCartAPI(productHandle, quantity) {
+    // 1. Recupera variant ID da Shopify
+    const variantId = await getVariantIdByHandle(productHandle);
+    if (!variantId) {
+        throw new Error('Prodotto non trovato su Shopify');
+    }
+    
+    // 2. Trova info prodotto
+    const oknattyProduct = SHOPIFY_CONFIG.productHandles[productHandle];
+    const elementProduct = SHOPIFY_CONFIG.elementProducts.find(p => p.handle === productHandle);
+    const productInfo = oknattyProduct || elementProduct;
+    
+    if (!productInfo) {
+        throw new Error('Prodotto non configurato');
+    }
+    
+    // 3. Prova API
+    if (apiAvailable) {
+        const result = await apiCall('/cart', 'POST', {
+            handle: productHandle,
+            variantId,
+            quantity,
+            price: productInfo.price,
+            title: productInfo.title,
+            brand: productInfo.brand
+        });
+        
+        if (result && !result.error) {
+            updateCartBadge();
+            return result;
+        }
+    }
+    
+    // 4. Fallback localStorage
+    let cart = getLocalCart();
+    const existingIndex = cart.items.findIndex(item => item.handle === productHandle);
+    
+    if (existingIndex >= 0) {
+        cart.items[existingIndex].quantity += quantity;
+    } else {
+        cart.items.push({
+            handle: productHandle,
+            variantId,
+            quantity,
+            price: productInfo.price,
+            title: productInfo.title,
+            brand: productInfo.brand
+        });
+    }
+    
+    saveLocalCart(cart);
+    return cart;
+}
+
+async function updateCartItemAPI(handle, delta) {
+    const cart = await getCart();
+    const item = cart.items.find(i => i.handle === handle);
+    if (!item) return cart;
+    
+    const newQuantity = item.quantity + delta;
+    
+    if (apiAvailable) {
+        if (newQuantity <= 0) {
+            const result = await apiCall('/cart/item', 'DELETE', { handle });
+            if (result && !result.error) {
+                updateCartBadge();
+                return result;
+            }
+        } else {
+            const result = await apiCall('/cart/item', 'PUT', { handle, quantity: newQuantity });
+            if (result && !result.error) {
+                updateCartBadge();
+                return result;
+            }
+        }
+    }
+    
+    // Fallback
+    if (newQuantity <= 0) {
+        cart.items = cart.items.filter(i => i.handle !== handle);
+    } else {
+        item.quantity = newQuantity;
+    }
+    
+    saveLocalCart(cart);
+    return cart;
+}
+
+async function clearCartAPI() {
+    if (apiAvailable) {
+        const result = await apiCall('/cart/clear', 'POST');
+        if (result && !result.error) {
+            updateCartBadge();
+            return result;
+        }
+    }
+    
+    localStorage.removeItem(LOCAL_CART_KEY);
+    updateCartBadge();
+    return { items: [] };
+}
+
+async function createCheckoutAPI() {
+    const cart = await getCart();
+    
+    if (apiAvailable) {
+        const result = await apiCall('/cart/checkout', 'POST');
+        if (result && !result.error && result.checkoutUrl) {
+            return result.checkoutUrl;
+        }
+    }
+    
+    // Fallback: crea checkout Shopify diretto
+    if (cart.items.length === 0) return null;
+    
+    const lineItems = cart.items.map(item => ({
+        variantId: item.variantId,
         quantity: item.quantity
     }));
     
@@ -135,21 +291,6 @@ async function createShopifyCart(items) {
                 cart {
                     id
                     checkoutUrl
-                    lines(first: 10) {
-                        edges {
-                            node {
-                                quantity
-                                merchandise {
-                                    ... on ProductVariant {
-                                        title
-                                        product {
-                                            title
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
                 userErrors {
                     field
@@ -159,98 +300,69 @@ async function createShopifyCart(items) {
         }
     `;
     
-    const data = await shopifyFetch(query, { 
-        input: { lines } 
+    const data = await shopifyFetch(query, {
+        input: { lines: lineItems }
     });
     
-    const cart = data?.data?.cartCreate?.cart;
-    const errors = data?.data?.cartCreate?.userErrors;
-    
-    if (errors && errors.length > 0) {
-        console.error('Cart errors:', errors);
-        throw new Error(errors[0].message);
+    if (data?.data?.cartCreate?.userErrors?.length > 0) {
+        console.error('Shopify errors:', data.data.cartCreate.userErrors);
+        return null;
     }
     
-    return {
-        id: cart.id,
-        checkoutUrl: cart.checkoutUrl,
-        items: cart.lines.edges.map(e => e.node)
-    };
+    return data?.data?.cartCreate?.cart?.checkoutUrl || null;
 }
 
 // ============================================
-// AGGIUNGI AL CARRELLO
+// BADGE CARRELLO
 // ============================================
-async function addToCart(productHandle, quantity = 1) {
-    // Mostra loading
-    const btn = event?.target || document.querySelector('.product-cta');
+function updateCartBadge() {
+    getCart().then(cart => {
+        const totalItems = cart.items?.reduce((sum, item) => sum + item.quantity, 0) || 0;
+        
+        let badge = document.querySelector('.cart-badge');
+        if (!badge) {
+            const nav = document.querySelector('.nav-links');
+            if (nav) {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="#" class="cart-link" onclick="openCartDrawer(event)" title="Carrello">
+                        🛒 <span class="cart-badge">0</span>
+                    </a>
+                `;
+                nav.appendChild(li);
+                badge = li.querySelector('.cart-badge');
+            }
+        }
+        
+        if (badge) {
+            badge.textContent = totalItems;
+            badge.style.display = totalItems > 0 ? 'inline-block' : 'none';
+        }
+    });
+}
+
+// ============================================
+// ADD TO CART - Funzione principale
+// ============================================
+async function addToCart(productHandle, quantity) {
+    const btn = event?.target;
     if (btn) {
         btn.style.opacity = '0.7';
         btn.textContent = 'Aggiungendo...';
     }
     
     try {
-        // 1. Recupera variant ID da Shopify
-        const variantId = await getVariantIdByHandle(productHandle);
+        await addToCartAPI(productHandle, quantity);
         
-        if (!variantId) {
-            throw new Error('Prodotto non trovato su Shopify');
-        }
+        const addedProduct = SHOPIFY_CONFIG.productHandles[productHandle] || 
+                            SHOPIFY_CONFIG.elementProducts.find(p => p.handle === productHandle);
+        const addedName = addedProduct?.title || 'Prodotto';
         
-        // 2. Recupera carrello locale
-        let cart = getCart();
-        
-        // 3. Aggiungi/aggiorna item
-        const existingIndex = cart.items.findIndex(item => item.handle === productHandle);
-        if (existingIndex >= 0) {
-            cart.items[existingIndex].quantity += quantity;
-        } else {
-            // Cerca nelle config OKNATTY o ELEMENT
-            const oknattyProduct = SHOPIFY_CONFIG.productHandles[productHandle];
-            const elementProduct = SHOPIFY_CONFIG.elementProducts.find(p => p.handle === productHandle);
-            const productInfo = oknattyProduct || elementProduct;
-            
-            if (!productInfo) {
-                throw new Error('Prodotto non configurato nel carrello');
-            }
-            
-            cart.items.push({
-                handle: productHandle,
-                variantId: variantId,
-                quantity: quantity,
-                price: productInfo.price,
-                title: productInfo.title || productInfo.handle.replace(/-/g, ' '),
-                brand: productInfo.brand || 'ELEMENT'
-            });
-        }
-        
-        // 4. Crea/aggiorna carrello Shopify
-        const shopifyCart = await createShopifyCart(cart.items.map(item => ({
-            variantId: item.variantId,
-            quantity: item.quantity
-        })));
-        
-        // 5. Salva checkout URL
-        cart.checkoutUrl = shopifyCart.checkoutUrl;
-        cart.id = shopifyCart.id;
-        saveCart(cart);
-        
-        // 6. Feedback utente — mostra notifica ma NON aprire drawer
-        // L'utente può continuare a navigare e aggiungere altri prodotti
-        const addedProduct = SHOPIFY_CONFIG.productHandles[productHandle] || SHOPIFY_CONFIG.elementProducts.find(p => p.handle === productHandle);
-        const addedName = addedProduct?.title || addedProduct?.handle?.replace(/-/g, ' ') || 'Prodotto';
         showNotification(`✅ ${addedName} aggiunto! Clicca 🛒 per vedere il carrello`);
-        
-        // 7. NON aprire drawer — lascia l'utente continuare a navigare
         
     } catch (err) {
         console.error('Errore addToCart:', err);
         showNotification('❌ Errore: ' + err.message, 'error');
-        
-        // Fallback: redirect diretto al prodotto Shopify
-        const cleanDomain = SHOPIFY_CONFIG.domain.replace(/^https?:\/\//, '');
-        const shopifyUrl = `https://${cleanDomain}/products/${productHandle}`;
-        // window.location.href = shopifyUrl;
     } finally {
         if (btn) {
             btn.style.opacity = '1';
@@ -262,24 +374,21 @@ async function addToCart(productHandle, quantity = 1) {
 // ============================================
 // CARRELLO DRAWER
 // ============================================
-function openCartDrawer(e) {
+async function openCartDrawer(e) {
     if (e) e.preventDefault();
     
-    // Rimuovi drawer esistente
     const existing = document.querySelector('.cart-drawer');
     if (existing) existing.remove();
     
-    const cart = getCart();
-    const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
-    const totalPrice = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const cart = await getCart();
+    const totalItems = cart.items?.reduce((sum, item) => sum + item.quantity, 0) || 0;
+    const totalPrice = cart.items?.reduce((sum, item) => sum + (item.price * item.quantity), 0) || 0;
     
-    const drawer = document.createElement('div');
-    drawer.className = 'cart-drawer';
-    
-    // Seleziona 3 prodotti ELEMENT random diversi da mostrare
     const shuffled = [...SHOPIFY_CONFIG.elementProducts].sort(() => 0.5 - Math.random());
     const suggested = shuffled.slice(0, 3);
     
+    const drawer = document.createElement('div');
+    drawer.className = 'cart-drawer';
     drawer.innerHTML = `
         <div class="cart-drawer-overlay" onclick="closeCartDrawer()"></div>
         <div class="cart-drawer-panel">
@@ -313,7 +422,7 @@ function openCartDrawer(e) {
                         <h4>🌟 Completa il tuo ordine</h4>
                         <p class="cart-suggestions-sub">Integratori ELEMENT per il tuo training</p>
                         ${suggested.map(prod => `
-                            <div class="cart-suggestion-item" onclick="addToCart('${prod.handle}', 1); showNotification('✅ ${prod.title} aggiunto!')">
+                            <div class="cart-suggestion-item" onclick="addToCart('${prod.handle}', 1)">
                                 <div class="cart-suggestion-info">
                                     <span class="cart-suggestion-name">${prod.title}</span>
                                     <span class="cart-suggestion-sub">${prod.subtitle}</span>
@@ -333,9 +442,9 @@ function openCartDrawer(e) {
                         <span>Totale (${totalItems} ${totalItems === 1 ? 'articolo' : 'articoli'})</span>
                         <span>€${totalPrice.toFixed(2)}</span>
                     </div>
-                    <a href="${cart.checkoutUrl || '#'}" class="btn-checkout" target="_blank">
+                    <button class="btn-checkout" onclick="goToCheckout()">
                         Vai al Checkout →
-                    </a>
+                    </button>
                     <button class="btn-continue" onclick="closeCartDrawer()">← Continua a navigare</button>
                     <button class="btn-clear" onclick="clearCart(); closeCartDrawer();">Svuota carrello</button>
                 </div>
@@ -354,33 +463,37 @@ function closeCartDrawer() {
 }
 
 async function updateCartItem(handle, delta) {
-    let cart = getCart();
-    const item = cart.items.find(i => i.handle === handle);
-    if (!item) return;
-    
-    item.quantity += delta;
-    if (item.quantity <= 0) {
-        cart.items = cart.items.filter(i => i.handle !== handle);
+    await updateCartItemAPI(handle, delta);
+    openCartDrawer();
+}
+
+async function clearCart() {
+    await clearCartAPI();
+}
+
+async function goToCheckout() {
+    const btn = document.querySelector('.btn-checkout');
+    if (btn) {
+        btn.textContent = 'Creando checkout...';
+        btn.style.opacity = '0.7';
     }
     
-    if (cart.items.length === 0) {
-        clearCart();
-        closeCartDrawer();
-        return;
-    }
-    
-    // Ricrea carrello Shopify
     try {
-        const shopifyCart = await createShopifyCart(cart.items.map(item => ({
-            variantId: item.variantId,
-            quantity: item.quantity
-        })));
-        cart.checkoutUrl = shopifyCart.checkoutUrl;
-        cart.id = shopifyCart.id;
-        saveCart(cart);
-        openCartDrawer();
+        const checkoutUrl = await createCheckoutAPI();
+        if (checkoutUrl) {
+            window.open(checkoutUrl, '_blank');
+            closeCartDrawer();
+        } else {
+            showNotification('❌ Errore nel creare il checkout', 'error');
+        }
     } catch (err) {
-        console.error('Errore update cart:', err);
+        console.error('Checkout error:', err);
+        showNotification('❌ Errore checkout: ' + err.message, 'error');
+    } finally {
+        if (btn) {
+            btn.textContent = 'Vai al Checkout →';
+            btn.style.opacity = '1';
+        }
     }
 }
 
@@ -414,7 +527,7 @@ function showNotification(message, type = 'success') {
 }
 
 // ============================================
-// STILI CSS DINAMICI
+// STILI CSS
 // ============================================
 function injectCartStyles() {
     if (document.getElementById('cart-styles')) return;
@@ -436,13 +549,16 @@ function injectCartStyles() {
             color: white;
             font-size: 0.7rem;
             font-weight: 700;
-            width: 20px;
+            min-width: 20px;
             height: 20px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Fredoka', sans-serif;
+            padding: 0 4px;
+            line-height: 1;
+            text-align: center;
         }
         .cart-drawer {
             position: fixed;
@@ -597,27 +713,12 @@ function injectCartStyles() {
             font-size: 1.1rem;
             transition: all 0.3s;
             margin-bottom: 12px;
+            border: none;
+            cursor: pointer;
         }
         .btn-checkout:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(92,61,46,0.3);
-        }
-        .btn-clear {
-            display: block;
-            width: 100%;
-            background: transparent;
-            color: var(--brown, #5C3D2E);
-            border: 2px solid var(--brown, #5C3D2E);
-            padding: 12px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-family: 'Fredoka', sans-serif;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .btn-clear:hover {
-            background: var(--brown, #5C3D2E);
-            color: white;
         }
         .btn-continue {
             display: block;
@@ -635,6 +736,23 @@ function injectCartStyles() {
         }
         .btn-continue:hover {
             background: var(--dark-brown, #3D2618);
+            color: white;
+        }
+        .btn-clear {
+            display: block;
+            width: 100%;
+            background: transparent;
+            color: var(--brown, #5C3D2E);
+            border: 2px solid var(--brown, #5C3D2E);
+            padding: 12px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-clear:hover {
+            background: var(--brown, #5C3D2E);
             color: white;
         }
         .cart-suggestions {
@@ -749,3 +867,4 @@ window.openCartDrawer = openCartDrawer;
 window.closeCartDrawer = closeCartDrawer;
 window.updateCartItem = updateCartItem;
 window.clearCart = clearCart;
+window.goToCheckout = goToCheckout;
