@@ -4,8 +4,8 @@
 // ============================================
 
 const API_CONFIG = {
-    // URL dell'API carrello (da aggiornare dopo deploy)
-    baseUrl: 'https://cart.oknatty.com', // o https://cart-api.oknatty-website.workers.dev
+    // URL dell'API carrello (deployata su Cloudflare Workers)
+    baseUrl: 'https://oknatty-cart-api.pickle-amazonsaurus.workers.dev',
     // Fallback: se l'API non è disponibile, usa localStorage
     fallbackToLocalStorage: true
 };
