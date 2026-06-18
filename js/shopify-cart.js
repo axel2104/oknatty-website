@@ -47,12 +47,57 @@ const CART_ID_KEY = 'oknatty_cart_id';
 const LOCAL_CART_KEY = 'oknatty_cart_fallback';
 
 function getCartId() {
+    // 1. Prova a leggere dall'URL (cross-domain)
+    const urlParams = new URLSearchParams(window.location.search);
+    const cartIdFromUrl = urlParams.get('cart_id');
+    if (cartIdFromUrl) {
+        localStorage.setItem(CART_ID_KEY, cartIdFromUrl);
+        // Rimuovi cart_id dall'URL senza ricaricare
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.delete('cart_id');
+        window.history.replaceState({}, '', newUrl.toString());
+        return cartIdFromUrl;
+    }
+    
+    // 2. Prova localStorage
     return localStorage.getItem(CART_ID_KEY) || null;
 }
 
 function setCartId(id) {
     localStorage.setItem(CART_ID_KEY, id);
 }
+
+// ============================================
+// CROSS-DOMAIN LINKS - Aggiunge cart_id ai link
+// ============================================
+function addCartIdToLinks() {
+    const cartId = getCartId();
+    if (!cartId) return;
+    
+    // Aggiungi cart_id a tutti i link verso elementfor.com o oknatty.com
+    document.querySelectorAll('a[href*="elementfor.com"], a[href*="oknatty.com"]').forEach(link => {
+        const url = new URL(link.href);
+        if (!url.searchParams.has('cart_id')) {
+            url.searchParams.set('cart_id', cartId);
+            link.href = url.toString();
+        }
+    });
+}
+
+// Helper per creare URL cross-domain con cart_id
+function getCrossDomainUrl(baseUrl) {
+    const cartId = getCartId();
+    if (!cartId) return baseUrl;
+    
+    const url = new URL(baseUrl);
+    url.searchParams.set('cart_id', cartId);
+    return url.toString();
+}
+
+// Esegui dopo il caricamento della pagina
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(addCartIdToLinks, 500);
+});
 
 // ============================================
 // API CLIENT
@@ -859,6 +904,11 @@ function injectCartStyles() {
 document.addEventListener('DOMContentLoaded', () => {
     injectCartStyles();
     updateCartBadge();
+    
+    // Aggiungi cart_id ai link cross-domain dopo un breve delay
+    setTimeout(() => {
+        addCartIdToLinks();
+    }, 500);
 });
 
 // Esponi funzioni globali
@@ -868,3 +918,4 @@ window.closeCartDrawer = closeCartDrawer;
 window.updateCartItem = updateCartItem;
 window.clearCart = clearCart;
 window.goToCheckout = goToCheckout;
+window.getCrossDomainUrl = getCrossDomainUrl;
