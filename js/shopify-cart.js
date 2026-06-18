@@ -6,15 +6,24 @@ const SHOPIFY_CONFIG = {
     // Mappa handle Shopify → pagine prodotto OKNATTY
     // Gli handle sono gli slug dei prodotti su Shopify (ultima parte dell'URL)
     productHandles: {
-        'cioccolato-fondente': { handle: 'cioccolato-fondente', price: 9.90 },
-        'cioccolato-cocco': { handle: 'cioccolato-cocco', price: 9.90 },
-        'caramello-salato': { handle: 'caramello-salato', price: 9.90 },
-        'crema-nocciola-bianca': { handle: 'crema-nocciola-bianca', price: 9.90 },
-        'cacao-nocciola': { handle: 'cacao-nocciola', price: 9.90 },
-        'crema-cocco-bar': { handle: 'crema-cocco-bar', price: 9.90 },
-        'burro-arachidi': { handle: 'burro-arachidi', price: 8.90 },
-        'crema-di-riso': { handle: 'crema-di-riso', price: 13.90 }
-    }
+        'cioccolato-fondente': { handle: 'cioccolato-fondente', price: 9.90, brand: 'OKNATTY' },
+        'cioccolato-cocco': { handle: 'cioccolato-cocco', price: 9.90, brand: 'OKNATTY' },
+        'caramello-salato': { handle: 'caramello-salato', price: 9.90, brand: 'OKNATTY' },
+        'crema-nocciola-bianca': { handle: 'crema-nocciola-bianca', price: 9.90, brand: 'OKNATTY' },
+        'cacao-nocciola': { handle: 'cacao-nocciola', price: 9.90, brand: 'OKNATTY' },
+        'crema-cocco-bar': { handle: 'crema-cocco-bar', price: 9.90, brand: 'OKNATTY' },
+        'burro-arachidi': { handle: 'burro-arachidi', price: 8.90, brand: 'OKNATTY' },
+        'crema-di-riso': { handle: 'crema-di-riso', price: 13.90, brand: 'OKNATTY' }
+    },
+    // Prodotti ELEMENT consigliati nel carrello (cross-sell)
+    elementProducts: [
+        { handle: 'novapro-ultra-pure-whey', title: 'NOVAPRO ULTRA PURE WHEY', price: 29.90, subtitle: '900g' },
+        { handle: 'aminoleader-essential-aminoacid', title: 'AMINOLEADER', price: 24.90, subtitle: 'Aminoacidi Essenziali 250g' },
+        { handle: 'forge-creatina-monoidrato', title: 'FORGE CREATINA', price: 19.90, subtitle: '200 Mesh 240g' },
+        { handle: 'kagliostro-hardcore-focus-formula', title: 'KAGLIOSTRO', price: 34.90, subtitle: 'Pre-Workout 250g' },
+        { handle: 'reborn-full-recovery-formula', title: 'REBORN', price: 32.90, subtitle: 'Recovery 600g' },
+        { handle: 'journey-vit-24-h', title: 'JOURNEY VIT', price: 22.90, subtitle: 'Multivitaminico 120cps' }
+    ]
 };
 
 // GraphQL endpoint Storefront API
@@ -196,11 +205,22 @@ async function addToCart(productHandle, quantity = 1) {
         if (existingIndex >= 0) {
             cart.items[existingIndex].quantity += quantity;
         } else {
+            // Cerca nelle config OKNATTY o ELEMENT
+            const oknattyProduct = SHOPIFY_CONFIG.productHandles[productHandle];
+            const elementProduct = SHOPIFY_CONFIG.elementProducts.find(p => p.handle === productHandle);
+            const productInfo = oknattyProduct || elementProduct;
+            
+            if (!productInfo) {
+                throw new Error('Prodotto non configurato nel carrello');
+            }
+            
             cart.items.push({
                 handle: productHandle,
                 variantId: variantId,
                 quantity: quantity,
-                ...SHOPIFY_CONFIG.productHandles[productHandle]
+                price: productInfo.price,
+                title: productInfo.title || productInfo.handle.replace(/-/g, ' '),
+                brand: productInfo.brand || 'ELEMENT'
             });
         }
         
@@ -215,11 +235,13 @@ async function addToCart(productHandle, quantity = 1) {
         cart.id = shopifyCart.id;
         saveCart(cart);
         
-        // 6. Feedback utente
-        showNotification(`✅ Aggiunto al carrello!`);
+        // 6. Feedback utente — mostra notifica ma NON aprire drawer
+        // L'utente può continuare a navigare e aggiungere altri prodotti
+        const addedProduct = SHOPIFY_CONFIG.productHandles[productHandle] || SHOPIFY_CONFIG.elementProducts.find(p => p.handle === productHandle);
+        const addedName = addedProduct?.title || addedProduct?.handle?.replace(/-/g, ' ') || 'Prodotto';
+        showNotification(`✅ ${addedName} aggiunto! Clicca 🛒 per vedere il carrello`);
         
-        // 7. Apri drawer carrello
-        openCartDrawer();
+        // 7. NON aprire drawer — lascia l'utente continuare a navigare
         
     } catch (err) {
         console.error('Errore addToCart:', err);
@@ -253,6 +275,11 @@ function openCartDrawer(e) {
     
     const drawer = document.createElement('div');
     drawer.className = 'cart-drawer';
+    
+    // Seleziona 3 prodotti ELEMENT random diversi da mostrare
+    const shuffled = [...SHOPIFY_CONFIG.elementProducts].sort(() => 0.5 - Math.random());
+    const suggested = shuffled.slice(0, 3);
+    
     drawer.innerHTML = `
         <div class="cart-drawer-overlay" onclick="closeCartDrawer()"></div>
         <div class="cart-drawer-panel">
@@ -269,7 +296,8 @@ function openCartDrawer(e) {
                 ` : cart.items.map(item => `
                     <div class="cart-item">
                         <div class="cart-item-info">
-                            <span class="cart-item-name">${item.handle.replace(/-/g, ' ')}</span>
+                            <span class="cart-item-name">${item.title || item.handle.replace(/-/g, ' ')}</span>
+                            <span class="cart-item-brand">${item.brand || 'OKNATTY'}</span>
                             <span class="cart-item-price">€${item.price.toFixed(2)}</span>
                         </div>
                         <div class="cart-item-qty">
@@ -279,16 +307,36 @@ function openCartDrawer(e) {
                         </div>
                     </div>
                 `).join('')}
+                
+                ${totalItems > 0 ? `
+                    <div class="cart-suggestions">
+                        <h4>🌟 Completa il tuo ordine</h4>
+                        <p class="cart-suggestions-sub">Integratori ELEMENT per il tuo training</p>
+                        ${suggested.map(prod => `
+                            <div class="cart-suggestion-item" onclick="addToCart('${prod.handle}', 1); showNotification('✅ ${prod.title} aggiunto!')">
+                                <div class="cart-suggestion-info">
+                                    <span class="cart-suggestion-name">${prod.title}</span>
+                                    <span class="cart-suggestion-sub">${prod.subtitle}</span>
+                                </div>
+                                <div class="cart-suggestion-price-add">
+                                    <span class="cart-suggestion-price">€${prod.price.toFixed(2)}</span>
+                                    <button class="cart-suggestion-add">+</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
             </div>
             ${totalItems > 0 ? `
                 <div class="cart-drawer-footer">
                     <div class="cart-total">
-                        <span>Totale</span>
+                        <span>Totale (${totalItems} ${totalItems === 1 ? 'articolo' : 'articoli'})</span>
                         <span>€${totalPrice.toFixed(2)}</span>
                     </div>
                     <a href="${cart.checkoutUrl || '#'}" class="btn-checkout" target="_blank">
                         Vai al Checkout →
                     </a>
+                    <button class="btn-continue" onclick="closeCartDrawer()">← Continua a navigare</button>
                     <button class="btn-clear" onclick="clearCart(); closeCartDrawer();">Svuota carrello</button>
                 </div>
             ` : ''}
@@ -482,6 +530,15 @@ function injectCartStyles() {
             color: var(--dark-brown, #3D2618);
             text-transform: capitalize;
         }
+        .cart-item-brand {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--brown, #5C3D2E);
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
         .cart-item-price {
             display: block;
             color: var(--brown, #5C3D2E);
@@ -559,6 +616,100 @@ function injectCartStyles() {
             transition: all 0.3s;
         }
         .btn-clear:hover {
+            background: var(--brown, #5C3D2E);
+            color: white;
+        }
+        .btn-continue {
+            display: block;
+            width: 100%;
+            background: var(--cream, #F5E6C8);
+            color: var(--dark-brown, #3D2618);
+            border: 2px solid var(--cream, #F5E6C8);
+            padding: 12px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-bottom: 12px;
+        }
+        .btn-continue:hover {
+            background: var(--dark-brown, #3D2618);
+            color: white;
+        }
+        .cart-suggestions {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--cream, #F5E6C8);
+        }
+        .cart-suggestions h4 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            color: var(--dark-brown, #3D2618);
+            margin: 0 0 4px 0;
+        }
+        .cart-suggestions-sub {
+            font-size: 0.85rem;
+            color: var(--brown, #5C3D2E);
+            margin: 0 0 16px 0;
+            opacity: 0.8;
+        }
+        .cart-suggestion-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            background: rgba(92, 61, 46, 0.05);
+            border: 2px solid var(--cream, #F5E6C8);
+            border-radius: 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .cart-suggestion-item:hover {
+            background: rgba(92, 61, 46, 0.1);
+            border-color: var(--brown, #5C3D2E);
+            transform: translateX(4px);
+        }
+        .cart-suggestion-name {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--dark-brown, #3D2618);
+            display: block;
+        }
+        .cart-suggestion-sub {
+            font-size: 0.75rem;
+            color: var(--brown, #5C3D2E);
+            opacity: 0.7;
+            display: block;
+            margin-top: 2px;
+        }
+        .cart-suggestion-price-add {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .cart-suggestion-price {
+            font-weight: 700;
+            color: var(--dark-brown, #3D2618);
+            font-size: 0.95rem;
+        }
+        .cart-suggestion-add {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--brown, #5C3D2E);
+            background: white;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cart-suggestion-add:hover {
             background: var(--brown, #5C3D2E);
             color: white;
         }
