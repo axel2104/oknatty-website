@@ -26,7 +26,9 @@ const SHOPIFY_CONFIG = {
         'cacao-nocciola': { handle: 'cacao-nocciola', price: 9.90, title: 'Cacao e Nocciola', brand: 'OKNATTY' },
         'crema-cocco-bar': { handle: 'crema-cocco-bar', price: 9.90, title: 'Crema Cocco Bar', brand: 'OKNATTY' },
         'burro-arachidi': { handle: 'burro-arachidi', price: 8.90, title: 'Burro d\'Arachidi', brand: 'OKNATTY' },
-        'crema-di-riso': { handle: 'crema-di-riso', price: 13.90, title: 'Crema di Riso', brand: 'OKNATTY' }
+        'crema-di-riso': { handle: 'crema-di-riso', price: 13.90, title: 'Crema di Riso', brand: 'OKNATTY' },
+        'farina-avena': { handle: 'farina-avena', price: 11.90, title: 'Farina d\'Avena', brand: 'OKNATTY' },
+        'fiocchi-avena': { handle: 'fiocchi-avena', price: 10.90, title: 'Fiocchi d\'Avena', brand: 'OKNATTY' }
     },
     
     // ELEMENT products (cross-sell)
@@ -173,14 +175,15 @@ async function shopifyFetch(query, variables = {}) {
     return response.json();
 }
 
-async function getVariantIdByHandle(handle) {
+async function getVariantIdByHandle(handle, variantTitle) {
     const query = `
         query getProduct($handle: String!) {
             product(handle: $handle) {
-                variants(first: 1) {
+                variants(first: 10) {
                     edges {
                         node {
                             id
+                            title
                             price {
                                 amount
                                 currencyCode
@@ -191,10 +194,14 @@ async function getVariantIdByHandle(handle) {
             }
         }
     `;
-    
+
     const data = await shopifyFetch(query, { handle });
-    const variant = data?.data?.product?.variants?.edges?.[0]?.node;
-    return variant?.id || null;
+    const edges = data?.data?.product?.variants?.edges || [];
+    if (variantTitle) {
+        const match = edges.find(e => e.node.title === variantTitle);
+        if (match) return match.node.id;
+    }
+    return edges[0]?.node?.id || null;
 }
 
 // ============================================
@@ -210,9 +217,9 @@ async function getCart() {
     return getLocalCart();
 }
 
-async function addToCartAPI(productHandle, quantity) {
+async function addToCartAPI(productHandle, quantity, variantTitle, variantPrice) {
     // 1. Recupera variant ID da Shopify
-    const variantId = await getVariantIdByHandle(productHandle);
+    const variantId = await getVariantIdByHandle(productHandle, variantTitle);
     if (!variantId) {
         throw new Error('Prodotto non trovato su Shopify');
     }
@@ -226,27 +233,31 @@ async function addToCartAPI(productHandle, quantity) {
         throw new Error('Prodotto non configurato');
     }
     
+    const displayTitle = variantTitle ? `${productInfo.title} ${variantTitle}` : productInfo.title;
+    const displayPrice = variantPrice != null ? variantPrice : productInfo.price;
+
     // 3. Prova API
     if (apiAvailable) {
         const result = await apiCall('/cart', 'POST', {
             handle: productHandle,
             variantId,
             quantity,
-            price: productInfo.price,
-            title: productInfo.title,
+            price: displayPrice,
+            title: displayTitle,
             brand: productInfo.brand
         });
-        
+
         if (result && !result.error) {
             updateCartBadge();
             return result;
         }
     }
-    
+
     // 4. Fallback localStorage
     let cart = getLocalCart();
-    const existingIndex = cart.items.findIndex(item => item.handle === productHandle);
-    
+    const cartKey = variantId || productHandle;
+    const existingIndex = cart.items.findIndex(item => (item.variantId || item.handle) === cartKey);
+
     if (existingIndex >= 0) {
         cart.items[existingIndex].quantity += quantity;
     } else {
@@ -254,8 +265,8 @@ async function addToCartAPI(productHandle, quantity) {
             handle: productHandle,
             variantId,
             quantity,
-            price: productInfo.price,
-            title: productInfo.title,
+            price: displayPrice,
+            title: displayTitle,
             brand: productInfo.brand
         });
     }
@@ -389,19 +400,19 @@ function updateCartBadge() {
 // ============================================
 // ADD TO CART - Funzione principale
 // ============================================
-async function addToCart(productHandle, quantity) {
+async function addToCart(productHandle, quantity, variantTitle, variantPrice) {
     const btn = event?.target;
     if (btn) {
         btn.style.opacity = '0.7';
         btn.textContent = 'Aggiungendo...';
     }
-    
+
     try {
-        await addToCartAPI(productHandle, quantity);
-        
-        const addedProduct = SHOPIFY_CONFIG.productHandles[productHandle] || 
+        await addToCartAPI(productHandle, quantity, variantTitle, variantPrice);
+
+        const addedProduct = SHOPIFY_CONFIG.productHandles[productHandle] ||
                             SHOPIFY_CONFIG.elementProducts.find(p => p.handle === productHandle);
-        const addedName = addedProduct?.title || 'Prodotto';
+        const addedName = (addedProduct?.title || 'Prodotto') + (variantTitle ? ' ' + variantTitle : '');
         
         showNotification(`✅ ${addedName} aggiunto! Clicca 🛒 per vedere il carrello`);
         
